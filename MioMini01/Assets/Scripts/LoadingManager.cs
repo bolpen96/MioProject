@@ -39,6 +39,7 @@ public class LoadingManager : MonoBehaviour
             else
             {
                 progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
+               
                 if(progressBar.fillAmount == 1.0f)
                 {
                     op.allowSceneActivation = true;
