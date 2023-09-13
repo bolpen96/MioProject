@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int State = 0;
 
     public int railLv;
-
+    public float GameTime;
 
     private void Awake()
     {
