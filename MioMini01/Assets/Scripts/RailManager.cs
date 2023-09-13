@@ -17,6 +17,8 @@ public class RailManager : MonoBehaviour
     public Transform targetRail03;
 
     public TextMeshProUGUI txt_Score;
+    public Image fiverBar;
+    public GameObject LandObj;
 
     [SerializeField] float speed;
     [SerializeField] float posValue;
@@ -44,6 +46,8 @@ public class RailManager : MonoBehaviour
         startPos03.x += 327;
 
         InvokeRepeating("MakeFood", 0f, 2f);
+
+        InvokeRepeating("MakeHari", 0f, 2f);
     }
 
     private void Update()
@@ -103,8 +107,32 @@ public class RailManager : MonoBehaviour
     public void FoodScore()
     {
         //GameManager.Instance.Score += 10;
+        if((fiverBar.fillAmount += 0.1f) == 1)
+        {
+            FiverTime();
+        }
+        else
+        {
+            fiverBar.fillAmount += 0.1f;
+        }
+        
+
         score += 10;
         txt_Score.text = score.ToString();
+    }
+
+    public void FiverTime()
+    {
+        fiverBar.fillAmount = 0;
+
+        score += 500;
+        txt_Score.text = score.ToString();
+
+    }
+
+    void MakeHari()
+    {
+        this.GetComponent<HariManager>().Born(LandObj);
     }
 
 }
