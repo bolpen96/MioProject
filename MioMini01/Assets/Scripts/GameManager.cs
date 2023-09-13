@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public int State = 0;
 
+    public int railLv;
+
 
     private void Awake()
     {

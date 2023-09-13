@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,31 +11,76 @@ public class RailManager : MonoBehaviour
     public Image rail02;
     public Image rail03;
 
-    public float speed;
+    [SerializeField] float speed;
+    [SerializeField] float posValue;
 
     Vector2 startPos01;
     Vector2 startPos02;
     Vector2 startPos03;
+    float newPos01;
+    float newPos02;
+    float newPos03;
 
-    public float offset01;
-    public float offset02;
-    public float offset03;
-
-    public float posValue01;
-    public float posValue02;
-    public float posValue03;
+    float lv;
 
     private void Start()
     {
         startPos01 = rail01.transform.position;
+        startPos01.x += 327;
+
         startPos02 = rail02.transform.position;
+        startPos02.x += 327;
+
         startPos03 = rail03.transform.position;
+        startPos03.x += 327;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        offset01 = Mathf.Repeat(Time.time * speed, posValue01);
-        rail01.transform.position = startPos01 + Vector2.right * offset01;
+        newPos01 = Mathf.Repeat(Time.time * speed, posValue);
+        rail01.transform.position = startPos01 + (Vector2.left * newPos01);
+
+        /*if (GameManager.Instance.railLv > 1)
+        {
+            newPos02 = Mathf.Repeat(Time.time * speed, posValue);
+            rail02.transform.position = startPos02 + (Vector2.left * newPos02);
+        }
+        else if(GameManager.Instance.railLv > 2)
+        {
+            newPos03 = Mathf.Repeat(Time.time * speed, posValue);
+            rail03.transform.position = startPos03 + (Vector2.left * newPos03);
+        }*/
+
+        if (lv > 0)
+        {
+            newPos02 = Mathf.Repeat(Time.time * speed, posValue);
+            rail02.transform.position = startPos02 + (Vector2.left * newPos02);
+            rail02.color = new Color32(255, 255, 255, 255);
+        }
+        
+        if(lv > 1)
+        {
+            newPos03 = Mathf.Repeat(Time.time * speed, posValue);
+            rail03.transform.position = startPos03 + (Vector2.left * newPos03);
+            rail03.color = new Color32(255, 255, 255, 255);
+        }
+        else
+        {
+            rail02.color = new Color32(77, 77, 77, 255);
+            rail03.color = new Color32(77, 77, 77, 255);
+        }
     }
+
+    public void lvUp()
+    {
+        if (lv >= 3)
+        {
+            lv = 0;
+        }
+        else
+        {
+            lv++;
+        }
+    }
+
 }
