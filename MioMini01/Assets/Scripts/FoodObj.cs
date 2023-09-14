@@ -10,8 +10,12 @@ public class FoodObj : MonoBehaviour
 
     int ranHappy;
     int ranSad;
+    int ranNone;
 
     Sprite food;
+
+    int nonNum = 0;
+    int[] nonFood;
 
     private void Start()
     {
@@ -51,16 +55,17 @@ public class FoodObj : MonoBehaviour
                 Destroy(mio[i].transform.parent.transform.parent.gameObject,3f);
                 return;
             }
-            //잘못된 음식을 주었을 때
-            else
-            {
-                ranSad = UnityEngine.Random.Range(0, MiniGameManager.Instance.S_Icon.Length - 1);
-                mio[i].GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranSad];
-                mio[i].tag = "Untagged";
-                Destroy(mio[i].transform.parent.transform.parent.gameObject, 3f);
-                return;
-            }
-
         }
+
+        for(int j = 0; j < mio.Length; j++)
+        {
+            ranNone = UnityEngine.Random.Range(0, mio.Length - 1);
+            ranSad = UnityEngine.Random.Range(0, MiniGameManager.Instance.S_Icon.Length - 1);
+            mio[ranNone].GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranSad];
+            mio[ranNone].tag = "Untagged";
+            Destroy(mio[ranNone].transform.parent.transform.parent.gameObject, 3f);
+            return;
+        }
+
     }
 }

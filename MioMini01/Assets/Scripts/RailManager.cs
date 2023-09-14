@@ -56,7 +56,6 @@ public class RailManager : MonoBehaviour
         newPos01 = Mathf.Repeat(Time.time * speed, posValue);
         rail01.transform.position = startPos01 + (Vector2.left * newPos01);
 
-
         /*if (GameManager.Instance.railLv > 1)
         {
             newPos02 = Mathf.Repeat(Time.time * speed, posValue);
@@ -67,30 +66,24 @@ public class RailManager : MonoBehaviour
             newPos03 = Mathf.Repeat(Time.time * speed, posValue);
             rail03.transform.position = startPos03 + (Vector2.left * newPos03);
         }*/
-
-
-        if (lv > 0)
+        if(lv > 0)
         {
             newPos02 = Mathf.Repeat(Time.time * speed, posValue);
             rail02.transform.position = startPos02 + (Vector2.left * newPos02);
             rail02.color = new Color32(255, 255, 255, 255);
         }
-        
         if(lv > 1)
         {
             newPos03 = Mathf.Repeat(Time.time * speed, posValue);
             rail03.transform.position = startPos03 + (Vector2.left * newPos03);
             rail03.color = new Color32(255, 255, 255, 255);
         }
-        else
-        {
-            rail02.color = new Color32(77, 77, 77, 255);
-            rail03.color = new Color32(77, 77, 77, 255);
-        }
+
     }
 
     public void lvUp()
     {
+
         if (lv >= 3)
         {
             lv = 0;
@@ -99,11 +92,37 @@ public class RailManager : MonoBehaviour
         {
             lv++;
         }
+
+        if (lv >= 0)
+        {
+            InvokeRepeating("MakeFood02", 0f, 2f);
+        }
+        if (lv > 1)
+        {
+            InvokeRepeating("MakeFood03", 0f, 2f);
+        }
+        else
+        {
+            rail02.color = new Color32(77, 77, 77, 255);
+            rail03.color = new Color32(77, 77, 77, 255);
+            CancelInvoke("MakeFood02");
+            CancelInvoke("MakeFood03");
+        }
+
     }
 
     void MakeFood()
     {
         this.GetComponent<FoodManager>().SpawnFood(targetRail01);
+    }
+
+    void MakeFood02()
+    {
+        this.GetComponent<FoodManager>().SpawnFood(targetRail02);
+    }
+    void MakeFood03()
+    {
+        this.GetComponent<FoodManager>().SpawnFood(targetRail03);
     }
     public void FoodScore()
     {
