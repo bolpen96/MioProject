@@ -47,7 +47,8 @@ public class RailManager : MonoBehaviour
 
         InvokeRepeating("MakeFood", 0f, 2f);
 
-        InvokeRepeating("MakeHari", 0f, 2f);
+        InvokeRepeating("MakeHari", 0f, 5f);
+
     }
 
     private void Update()
@@ -106,6 +107,7 @@ public class RailManager : MonoBehaviour
     }
     public void FoodScore()
     {
+
         //GameManager.Instance.Score += 10;
         if((fiverBar.fillAmount += 0.1f) == 1)
         {
