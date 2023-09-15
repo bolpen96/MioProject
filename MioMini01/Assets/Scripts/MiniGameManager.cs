@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+
 public class MiniGameManager : MonoBehaviour
 {
     public static MiniGameManager Instance;
@@ -10,7 +12,11 @@ public class MiniGameManager : MonoBehaviour
     public Sprite[] S_Icon;
 
     public TextMeshProUGUI txt_Nick;
-    public float Score;
+    public float Score = 0;
+
+    public float fiverScore = 0;
+
+    public float isCorrect;
 
     private void Awake()
     {

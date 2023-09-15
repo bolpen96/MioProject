@@ -30,9 +30,10 @@ public class RailManager : MonoBehaviour
     float newPos02;
     float newPos03;
 
-    float lv;
+    float lv = 0;
 
-    public float score;
+    float smoothValue;
+    float smoothSpeed = 10f;
 
     private void Start()
     {
@@ -47,7 +48,7 @@ public class RailManager : MonoBehaviour
 
         InvokeRepeating("MakeFood", 0f, 2f);
 
-        InvokeRepeating("MakeHari", 0f, 5f);
+        InvokeRepeating("MakeHari", 0f, 2f);
 
     }
 
@@ -79,36 +80,64 @@ public class RailManager : MonoBehaviour
             rail03.color = new Color32(255, 255, 255, 255);
         }
 
+        if(MiniGameManager.Instance.isCorrect == 1)
+        {
+            if (smoothValue <= MiniGameManager.Instance.fiverScore)
+            {
+                smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * smoothSpeed);
+                fiverBar.fillAmount = smoothValue;
+                if (fiverBar.fillAmount >= 1)
+                {
+                    FiverTime();
+                    MiniGameManager.Instance.isCorrect = 0;
+                }
+            }
+            else
+            {
+                MiniGameManager.Instance.isCorrect = 0;
+            }
+            
+        }else if(MiniGameManager.Instance.isCorrect == -1)
+        {
+            if(smoothValue >= 0)
+            {
+                smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * smoothSpeed);
+                fiverBar.fillAmount = smoothValue;
+            }
+            else
+            {
+                MiniGameManager.Instance.isCorrect = 0;
+            }
+        }
+
     }
 
     public void lvUp()
     {
+        Debug.Log(lv);
 
-        if (lv >= 3)
+        if (lv == 0)
         {
+            InvokeRepeating("MakeFood02", 0f, 2f);
+        }
+        else if (lv == 1)
+        {
+            InvokeRepeating("MakeFood03", 0f, 2f);
+        }
+        
+        if(lv > 2)
+        {
+            rail02.color = new Color32(77, 77, 77, 255);
+            rail03.color = new Color32(77, 77, 77, 255);
+            CancelInvoke("MakeFood02");
+            CancelInvoke("MakeFood03");
             lv = 0;
         }
         else
         {
             lv++;
         }
-
-        if (lv >= 0)
-        {
-            InvokeRepeating("MakeFood02", 0f, 2f);
-        }
-        if (lv > 1)
-        {
-            InvokeRepeating("MakeFood03", 0f, 2f);
-        }
-        else
-        {
-            rail02.color = new Color32(77, 77, 77, 255);
-            rail03.color = new Color32(77, 77, 77, 255);
-            CancelInvoke("MakeFood02");
-            CancelInvoke("MakeFood03");
-        }
-
+        
     }
 
     void MakeFood()
@@ -124,30 +153,41 @@ public class RailManager : MonoBehaviour
     {
         this.GetComponent<FoodManager>().SpawnFood(targetRail03);
     }
-    public void FoodScore()
+    public void AddFoodScore()
     {
-
+        MiniGameManager.Instance.isCorrect = 1;
+        MiniGameManager.Instance.fiverScore += 0.1f;
         //GameManager.Instance.Score += 10;
-        if((fiverBar.fillAmount += 0.1f) == 1)
+        /*if ((MiniGameManager.Instance.fiverScore + 0.1f) >= 1)
         {
             FiverTime();
         }
         else
         {
-            fiverBar.fillAmount += 0.1f;
-        }
-        
+            MiniGameManager.Instance.fiverScore += 0.1f;
+            smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * smoothSpeed);
+            fiverBar.fillAmount = smoothValue;
+        }*/
 
-        score += 10;
-        txt_Score.text = score.ToString();
+        MiniGameManager.Instance.Score += 10;
+        txt_Score.text = MiniGameManager.Instance.Score.ToString();
+    }
+
+    public void DelFoodScore()
+    {
+        MiniGameManager.Instance.isCorrect = -1;
+
+        MiniGameManager.Instance.fiverScore = 0f;
+        //fiverBar.fillAmount = MiniGameManager.Instance.fiverScore;
     }
 
     public void FiverTime()
     {
-        fiverBar.fillAmount = 0;
+        MiniGameManager.Instance.fiverScore = 0;
+        fiverBar.fillAmount = MiniGameManager.Instance.fiverScore;
 
-        score += 500;
-        txt_Score.text = score.ToString();
+        MiniGameManager.Instance.Score += 500;
+        txt_Score.text = MiniGameManager.Instance.Score.ToString();
 
     }
 
@@ -155,5 +195,7 @@ public class RailManager : MonoBehaviour
     {
         this.GetComponent<HariManager>().Born(LandObj);
     }
+
+    
 
 }

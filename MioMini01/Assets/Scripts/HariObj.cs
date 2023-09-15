@@ -9,7 +9,7 @@ public class HariObj : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ranNum = Random.Range(0,MiniGameManager.Instance.S_Icon.Length -1);
+        ranNum = Random.Range(0,MiniGameManager.Instance.S_Icon.Length);
         if(Time.deltaTime > 10)
         {
             this.GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranNum];
