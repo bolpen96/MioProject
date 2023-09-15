@@ -12,6 +12,10 @@ public class RailManager : MonoBehaviour
     public Image rail02;
     public Image rail03;
 
+    public Image img_time;
+    public GameObject scoreBoard;
+    Color boardColor;
+
     public Transform targetRail01;
     public Transform targetRail02;
     public Transform targetRail03;
@@ -46,16 +50,33 @@ public class RailManager : MonoBehaviour
         startPos03 = rail03.transform.position;
         startPos03.x += 327;
 
-        InvokeRepeating("MakeFood", 0f, 2f);
+        InvokeRepeating("MakeFood01", 0f, 2f);
 
         InvokeRepeating("MakeHari", 0f, 2f);
 
+        boardColor = scoreBoard.transform.GetChild(1).GetComponent<Image>().color;
     }
 
     private void Update()
     {
-        newPos01 = Mathf.Repeat(Time.time * speed, posValue);
-        rail01.transform.position = startPos01 + (Vector2.left * newPos01);
+        if(MiniGameManager.Instance.GameOver == false)
+        {
+            rail01.color = new Color32(255, 255, 255, 255);
+            newPos01 = Mathf.Repeat(Time.time * speed, posValue);
+            rail01.transform.position = startPos01 + (Vector2.left * newPos01);
+        }
+        else
+        {
+            rail01.color = new Color32(77, 77, 77, 255);
+            rail02.color = new Color32(77, 77, 77, 255);
+            rail03.color = new Color32(77, 77, 77, 255);
+            CancelInvoke("MakeFood01");
+            CancelInvoke("MakeFood02");
+            CancelInvoke("MakeFood03");
+            CancelInvoke("MakeHari");
+            lv = 0;
+        }
+       
 
         /*if (GameManager.Instance.railLv > 1)
         {
@@ -109,7 +130,29 @@ public class RailManager : MonoBehaviour
                 MiniGameManager.Instance.isCorrect = 0;
             }
         }
+        if(img_time.fillAmount > 0 && MiniGameManager.Instance.GameOver == false)
+        {
+            img_time.fillAmount -= Time.deltaTime;
+        }else if(img_time.fillAmount <= 0 && MiniGameManager.Instance.GameOver == false)
+        {
+            scoreBoard.SetActive(true);
+            //StartCoroutine(GameOver());
+            MiniGameManager.Instance.GameOver = true;
+        }
 
+        if (scoreBoard.transform.GetChild(1).GetComponent<Image>().color.a > 0 || 
+            MiniGameManager.Instance.GameOver == true)
+        {
+            StartCoroutine(GameOver());
+            MiniGameManager.Instance.GameOver = false;
+        }
+        else if(scoreBoard.transform.GetChild(1).GetComponent<Image>().color.a <= 0)
+        {
+            scoreBoard.transform.GetChild(1).gameObject.SetActive(false);
+
+            boardColor.a = 1f;
+            scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
+        }
     }
 
     public void lvUp()
@@ -140,7 +183,7 @@ public class RailManager : MonoBehaviour
         
     }
 
-    void MakeFood()
+    void MakeFood01()
     {
         this.GetComponent<FoodManager>().SpawnFood(targetRail01);
     }
@@ -196,6 +239,44 @@ public class RailManager : MonoBehaviour
         this.GetComponent<HariManager>().Born(LandObj);
     }
 
-    
+    public void GameStart()
+    {
+        img_time.fillAmount = MiniGameManager.Instance.PlayTime;
+        
+        /*
+        startPos01 = rail01.transform.position;
+        startPos01.x += 327;
+
+        startPos02 = rail02.transform.position;
+        startPos02.x += 327;
+
+        startPos03 = rail03.transform.position;
+        startPos03.x += 327;*/
+
+        InvokeRepeating("MakeFood01", 0f, 2f);
+
+        InvokeRepeating("MakeHari", 0f, 2f);
+
+        boardColor.a = 1f;
+
+        scoreBoard.SetActive(false);
+        scoreBoard.transform.GetChild(1).gameObject.SetActive(true);
+        scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
+        MiniGameManager.Instance.GameOver = false;
+    }
+
+    public void PlayTimeCheck()
+    {
+
+    }
+
+    IEnumerator GameOver()
+    {
+        boardColor.a -= Time.deltaTime * 0.3f;
+        Debug.Log(boardColor.a);
+        scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
+
+        yield return new WaitForSeconds(0.1f);
+    }
 
 }

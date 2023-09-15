@@ -1494,7 +1494,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 756957378}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1646064770}
+        m_TargetAssemblyTypeName: RailManager, Assembly-CSharp
+        m_MethodName: GameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &756957378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4309,6 +4321,8 @@ MonoBehaviour:
   rail01: {fileID: 1278214146}
   rail02: {fileID: 450563546}
   rail03: {fileID: 470105700}
+  img_time: {fileID: 1353278793}
+  scoreBoard: {fileID: 108786036}
   targetRail01: {fileID: 269471580}
   targetRail02: {fileID: 826234753}
   targetRail03: {fileID: 277494420}
@@ -4381,6 +4395,8 @@ MonoBehaviour:
   Score: 0
   fiverScore: 0
   isCorrect: 0
+  PlayTime: 10
+  GameOver: 0
 --- !u!1 &1714089185
 GameObject:
   m_ObjectHideFlags: 0

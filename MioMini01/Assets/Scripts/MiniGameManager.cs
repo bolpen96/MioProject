@@ -18,6 +18,10 @@ public class MiniGameManager : MonoBehaviour
 
     public float isCorrect;
 
+    public float PlayTime;
+
+    public bool GameOver;
+
     private void Awake()
     {
         Instance = this;
