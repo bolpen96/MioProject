@@ -38,7 +38,7 @@ public class HariManager : MonoBehaviour
 
         //미오 모습 표시
         mio.GetComponent<Image>().sprite = mioSprite[ranSprite];
-        Debug.Log(mioSprite[ranSprite]);
+
         //부모 오브젝트의 일정한 위치로 이동
         temp.transform.localPosition = new Vector2(ranWidth, ranHeight);
     }

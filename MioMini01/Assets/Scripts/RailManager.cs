@@ -147,9 +147,7 @@ public class RailManager : MonoBehaviour
 
             if (fiverBar.fillAmount > MiniGameManager.Instance.fiverScore)
             {
-                smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * 0.01f * smoothSpeed);
-
-                fiverBar.fillAmount = smoothValue;
+                fiverBar.fillAmount -= Time.deltaTime * 0.1f;
             }
             else
             {
@@ -262,9 +260,7 @@ public class RailManager : MonoBehaviour
     public void FiverTime()
     {
         CancelInvoke("MakeFood01");
-        CancelInvoke("MakeFood02");
-        CancelInvoke("MakeFood03");
-
+        
         MiniGameManager.Instance.Score += 500;
         txt_Score.text = MiniGameManager.Instance.Score.ToString();
 
@@ -282,10 +278,12 @@ public class RailManager : MonoBehaviour
         InvokeRepeating("MakeFood01", 0f, 0.5f);
         if (IsInvoking("MakeFood02"))
         {
+            CancelInvoke("MakeFood02");
             InvokeRepeating("MakeFood02", 0f, 0.5f);
         }
         if (IsInvoking("MakeFood03"))
         {
+            CancelInvoke("MakeFood03");
             InvokeRepeating("MakeFood03", 0f, 0.5f);
         }
 
@@ -294,16 +292,17 @@ public class RailManager : MonoBehaviour
     void FiverEnd()
     {
         CancelInvoke("MakeFood01");
-        CancelInvoke("MakeFood02");
-        CancelInvoke("MakeFood03");
-
+        
         InvokeRepeating("MakeFood01", 0f, 2f);
+
         if (IsInvoking("MakeFood02"))
         {
+            CancelInvoke("MakeFood02");
             InvokeRepeating("MakeFood02", 0f, 2f);
         }
         if (IsInvoking("MakeFood03"))
         {
+            CancelInvoke("MakeFood03");
             InvokeRepeating("MakeFood03", 0f, 2f);
         }
 
