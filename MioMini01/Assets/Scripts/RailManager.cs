@@ -42,6 +42,8 @@ public class RailManager : MonoBehaviour
     float smoothValue;
     float smoothSpeed = 10f;
 
+
+
     private void Start()
     {
         startPos01 = rail01.transform.position;
@@ -237,7 +239,6 @@ public class RailManager : MonoBehaviour
         }
         FiverMio.SetActive(true);
 
-        
         InvokeRepeating("MakeFood01", 0f, 0.5f);
         if (IsInvoking("MakeFood02"))
         {
@@ -309,6 +310,10 @@ public class RailManager : MonoBehaviour
         CancelInvoke("MakeFood03");
         CancelInvoke("MakeMio");
         lv = 0;
+
+
+
+
 
         MiniGameManager.Instance.GameOver = false;
 
