@@ -14,7 +14,6 @@ public class RailManager : MonoBehaviour
 
     public Image img_time;
     public GameObject scoreBoard;
-    Color boardColor;
 
     public GameObject FiverMio;
     bool fiverActS = false;
@@ -58,27 +57,15 @@ public class RailManager : MonoBehaviour
 
         InvokeRepeating("MakeMio", 0f, 2f);
 
-        boardColor = scoreBoard.transform.GetChild(1).GetComponent<Image>().color;
     }
 
     private void Update()
     {
-        if(MiniGameManager.Instance.GameOver == false)
+        if(MiniGameManager.Instance.GameOver == false && scoreBoard.activeSelf == false)
         {
             rail01.color = new Color32(255, 255, 255, 255);
             newPos01 = Mathf.Repeat(Time.time * speed, posValue);
             rail01.transform.position = startPos01 + (Vector2.left * newPos01);
-        }
-        else
-        {
-            rail01.color = new Color32(77, 77, 77, 255);
-            rail02.color = new Color32(77, 77, 77, 255);
-            rail03.color = new Color32(77, 77, 77, 255);
-            CancelInvoke("MakeFood01");
-            CancelInvoke("MakeFood02");
-            CancelInvoke("MakeFood03");
-            CancelInvoke("MakeMio");
-            lv = 0;
         }
        
         if(MiniGameManager.Instance.Score >= 300)
@@ -88,7 +75,6 @@ public class RailManager : MonoBehaviour
         {
 
         }
-
 
         if(lv > 0)
         {
@@ -122,7 +108,8 @@ public class RailManager : MonoBehaviour
                 MiniGameManager.Instance.isCorrect = 0;
             }
             
-        }else if(MiniGameManager.Instance.isCorrect == -1)
+        }
+        else if(MiniGameManager.Instance.isCorrect == -1)
         {
             if(smoothValue >= 0)
             {
@@ -162,26 +149,14 @@ public class RailManager : MonoBehaviour
 
         if(img_time.fillAmount > 0 && MiniGameManager.Instance.GameOver == false)
         {
-            img_time.fillAmount -= Time.deltaTime * (1/MiniGameManager.Instance.PlayTime);
-        }else if(img_time.fillAmount <= 0 && MiniGameManager.Instance.GameOver == false)
+            img_time.fillAmount -= Time.deltaTime / MiniGameManager.Instance.PlayTime;
+        }
+        else if(img_time.fillAmount <= 0 && MiniGameManager.Instance.GameOver == false &&
+            scoreBoard.activeSelf == false)
         {
             scoreBoard.SetActive(true);
-            //StartCoroutine(GameOver());
+            GameOver();
             MiniGameManager.Instance.GameOver = true;
-        }
-
-        if (scoreBoard.transform.GetChild(1).GetComponent<Image>().color.a > 0 || 
-            MiniGameManager.Instance.GameOver == true)
-        {
-            StartCoroutine(GameOver());
-            MiniGameManager.Instance.GameOver = false;
-        }
-        else if(scoreBoard.transform.GetChild(1).GetComponent<Image>().color.a <= 0)
-        {
-            scoreBoard.transform.GetChild(1).gameObject.SetActive(false);
-
-            boardColor.a = 1f;
-            scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
         }
     }
 
@@ -228,17 +203,6 @@ public class RailManager : MonoBehaviour
     {
         MiniGameManager.Instance.isCorrect = 1;
         MiniGameManager.Instance.fiverScore += 0.1f;
-        //GameManager.Instance.Score += 10;
-        /*if ((MiniGameManager.Instance.fiverScore + 0.1f) >= 1)
-        {
-            FiverTime();
-        }
-        else
-        {
-            MiniGameManager.Instance.fiverScore += 0.1f;
-            smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * smoothSpeed);
-            fiverBar.fillAmount = smoothValue;
-        }*/
 
         MiniGameManager.Instance.Score += 10;
         txt_Score.text = MiniGameManager.Instance.Score.ToString();
@@ -249,7 +213,6 @@ public class RailManager : MonoBehaviour
         MiniGameManager.Instance.isCorrect = -1;
 
         MiniGameManager.Instance.fiverScore = 0f;
-        //fiverBar.fillAmount = MiniGameManager.Instance.fiverScore;
     }
 
     public void FiverScore()
@@ -323,25 +286,11 @@ public class RailManager : MonoBehaviour
     {
         img_time.fillAmount = 1;
         
-        /*
-        startPos01 = rail01.transform.position;
-        startPos01.x += 327;
-
-        startPos02 = rail02.transform.position;
-        startPos02.x += 327;
-
-        startPos03 = rail03.transform.position;
-        startPos03.x += 327;*/
-
         InvokeRepeating("MakeFood01", 0f, 2f);
 
         InvokeRepeating("MakeMio", 0f, 2f);
 
-        boardColor.a = 1f;
-
         scoreBoard.SetActive(false);
-        scoreBoard.transform.GetChild(1).gameObject.SetActive(true);
-        scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
         MiniGameManager.Instance.GameOver = false;
     }
 
@@ -350,12 +299,19 @@ public class RailManager : MonoBehaviour
 
     }
 
-    IEnumerator GameOver()
+    void GameOver()
     {
-        boardColor.a -= Time.deltaTime * 0.3f;
-        scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
+        rail01.color = new Color32(77, 77, 77, 255);
+        rail02.color = new Color32(77, 77, 77, 255);
+        rail03.color = new Color32(77, 77, 77, 255);
+        CancelInvoke("MakeFood01");
+        CancelInvoke("MakeFood02");
+        CancelInvoke("MakeFood03");
+        CancelInvoke("MakeMio");
+        lv = 0;
 
-        yield return new WaitForSeconds(0.1f);
+        MiniGameManager.Instance.GameOver = false;
+
     }
 
 }
