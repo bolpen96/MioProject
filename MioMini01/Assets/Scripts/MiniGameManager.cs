@@ -15,6 +15,7 @@ public class MiniGameManager : MonoBehaviour
     public float Score = 0;
 
     public float fiverScore = 0;
+    public bool IsFiver;
 
     public float isCorrect;
 

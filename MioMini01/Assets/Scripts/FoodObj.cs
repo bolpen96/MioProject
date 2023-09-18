@@ -40,42 +40,51 @@ public class FoodObj : MonoBehaviour
 
         GameObject[] mio = GameObject.FindGameObjectsWithTag("WantFood");
 
-        if(mio.Length == 0)
+        if(MiniGameManager.Instance.IsFiver == false)
         {
-            Debug.Log("없어요");
-            return;
-        }
-
-        Destroy(this.gameObject);
-
-        //정확한 음식을 주었을 때
-        for (int i = 0; i < mio.Length; i++)
-        {
-            
-            if (mio[i].GetComponent<Image>().sprite == food)
+            if (mio.Length == 0)
             {
-                obj.GetComponent<RailManager>().AddFoodScore();
-                //MiniGameManager.Instance.isCorrect = 1;
-                ranHappy = UnityEngine.Random.Range(0, MiniGameManager.Instance.H_Icon.Length);
-                mio[i].GetComponent<Image>().sprite = MiniGameManager.Instance.H_Icon[ranHappy];
-                mio[i].tag = "Untagged";
-                Destroy(mio[i].transform.parent.transform.parent.gameObject,3f);
+                Debug.Log("없어요");
+                return;
+            }
+
+            Destroy(this.gameObject);
+
+            //정확한 음식을 주었을 때
+            for (int i = 0; i < mio.Length; i++)
+            {
+
+                if (mio[i].GetComponent<Image>().sprite == food)
+                {
+                    obj.GetComponent<RailManager>().AddFoodScore();
+                    ranHappy = UnityEngine.Random.Range(0, MiniGameManager.Instance.H_Icon.Length);
+                    mio[i].GetComponent<Image>().sprite = MiniGameManager.Instance.H_Icon[ranHappy];
+                    mio[i].tag = "Untagged";
+                    Destroy(mio[i].transform.parent.transform.parent.gameObject, 3f);
+                    return;
+                }
+            }
+
+            //정확한 음식을 주지 않았을 때
+            for (int j = 0; j < mio.Length; j++)
+            {
+                obj.GetComponent<RailManager>().DelFoodScore();
+                ranNone = UnityEngine.Random.Range(0, mio.Length - 1);
+                ranSad = UnityEngine.Random.Range(0, MiniGameManager.Instance.S_Icon.Length);
+                mio[ranNone].GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranSad];
+                mio[ranNone].tag = "Untagged";
+                Destroy(mio[ranNone].transform.parent.transform.parent.gameObject, 3f);
                 return;
             }
         }
-
-        //정확한 음식을 주지 않았을 때
-        for(int j = 0; j < mio.Length; j++)
+        else if(MiniGameManager.Instance.IsFiver)
         {
-            obj.GetComponent<RailManager>().DelFoodScore();
-            //MiniGameManager.Instance.isCorrect = -1;
-            ranNone = UnityEngine.Random.Range(0, mio.Length - 1);
-            ranSad = UnityEngine.Random.Range(0, MiniGameManager.Instance.S_Icon.Length);
-            mio[ranNone].GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranSad];
-            mio[ranNone].tag = "Untagged";
-            Destroy(mio[ranNone].transform.parent.transform.parent.gameObject, 3f);
+            obj.GetComponent<RailManager>().FiverScore();
+            Destroy(this.gameObject);
             return;
         }
+
+        
 
     }
 }

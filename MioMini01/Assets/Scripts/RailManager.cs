@@ -16,6 +16,10 @@ public class RailManager : MonoBehaviour
     public GameObject scoreBoard;
     Color boardColor;
 
+    public GameObject FiverMio;
+    bool fiverActS = false;
+    bool fiverActE = false;
+
     public Transform targetRail01;
     public Transform targetRail02;
     public Transform targetRail03;
@@ -50,9 +54,9 @@ public class RailManager : MonoBehaviour
         startPos03 = rail03.transform.position;
         startPos03.x += 327;
 
-        InvokeRepeating("MakeFood01", 0f, 2f);
+        InvokeRepeating("MakeFood01", 0f, 1f);
 
-        InvokeRepeating("MakeHari", 0f, 2f);
+        InvokeRepeating("MakeMio", 0f, 2f);
 
         boardColor = scoreBoard.transform.GetChild(1).GetComponent<Image>().color;
     }
@@ -73,7 +77,7 @@ public class RailManager : MonoBehaviour
             CancelInvoke("MakeFood01");
             CancelInvoke("MakeFood02");
             CancelInvoke("MakeFood03");
-            CancelInvoke("MakeHari");
+            CancelInvoke("MakeMio");
             lv = 0;
         }
        
@@ -101,7 +105,8 @@ public class RailManager : MonoBehaviour
             rail03.color = new Color32(255, 255, 255, 255);
         }
 
-        if(MiniGameManager.Instance.isCorrect == 1)
+        //일반 상황
+        if(MiniGameManager.Instance.isCorrect == 1 && MiniGameManager.Instance.IsFiver == false)
         {
             if (smoothValue <= MiniGameManager.Instance.fiverScore)
             {
@@ -109,8 +114,9 @@ public class RailManager : MonoBehaviour
                 fiverBar.fillAmount = smoothValue;
                 if (fiverBar.fillAmount >= 1)
                 {
-                    FiverTime();
-                    MiniGameManager.Instance.isCorrect = 0;
+                    MiniGameManager.Instance.IsFiver = true;
+                    fiverActS = true;
+                    fiverActE = false;
                 }
             }
             else
@@ -130,9 +136,37 @@ public class RailManager : MonoBehaviour
                 MiniGameManager.Instance.isCorrect = 0;
             }
         }
+        //피버타임
+        else if(MiniGameManager.Instance.IsFiver == true)
+        {
+            if(fiverActS == true)
+            {
+                FiverTime();
+                MiniGameManager.Instance.isCorrect = 0;
+                MiniGameManager.Instance.fiverScore = 0;
+                fiverActS = false;
+            }
+
+            if (fiverBar.fillAmount > MiniGameManager.Instance.fiverScore)
+            {
+                smoothValue = Mathf.Lerp(fiverBar.fillAmount, MiniGameManager.Instance.fiverScore, Time.deltaTime * 0.01f * smoothSpeed);
+
+                fiverBar.fillAmount = smoothValue;
+            }
+            else
+            {
+                if(fiverActE == false)
+                {
+                    FiverEnd();
+                    fiverActE = true;
+                }
+            }
+        }
+
+
         if(img_time.fillAmount > 0 && MiniGameManager.Instance.GameOver == false)
         {
-            img_time.fillAmount -= Time.deltaTime;
+            img_time.fillAmount -= Time.deltaTime * (1/MiniGameManager.Instance.PlayTime);
         }else if(img_time.fillAmount <= 0 && MiniGameManager.Instance.GameOver == false)
         {
             scoreBoard.SetActive(true);
@@ -157,8 +191,6 @@ public class RailManager : MonoBehaviour
 
     public void lvUp()
     {
-        Debug.Log(lv);
-
         if (lv == 0)
         {
             InvokeRepeating("MakeFood02", 0f, 2f);
@@ -224,24 +256,75 @@ public class RailManager : MonoBehaviour
         //fiverBar.fillAmount = MiniGameManager.Instance.fiverScore;
     }
 
+    public void FiverScore()
+    {
+        MiniGameManager.Instance.Score += 20;
+        txt_Score.text = MiniGameManager.Instance.Score.ToString();
+    }
     public void FiverTime()
     {
-        MiniGameManager.Instance.fiverScore = 0;
-        fiverBar.fillAmount = MiniGameManager.Instance.fiverScore;
+        CancelInvoke("MakeFood01");
+        CancelInvoke("MakeFood02");
+        CancelInvoke("MakeFood03");
 
         MiniGameManager.Instance.Score += 500;
         txt_Score.text = MiniGameManager.Instance.Score.ToString();
 
+        CancelInvoke("MakeMio");
+        
+        GameObject[] destroyObject;
+        destroyObject = GameObject.FindGameObjectsWithTag("Mio");
+        foreach(GameObject oneObject in destroyObject)
+        {
+            Destroy(oneObject);
+        }
+        FiverMio.SetActive(true);
+
+        
+        InvokeRepeating("MakeFood01", 0f, 0.5f);
+        if (IsInvoking("MakeFood02"))
+        {
+            InvokeRepeating("MakeFood02", 0f, 0.5f);
+        }
+        if (IsInvoking("MakeFood03"))
+        {
+            InvokeRepeating("MakeFood03", 0f, 0.5f);
+        }
+
     }
 
-    void MakeHari()
+    void FiverEnd()
+    {
+        CancelInvoke("MakeFood01");
+        CancelInvoke("MakeFood02");
+        CancelInvoke("MakeFood03");
+
+        InvokeRepeating("MakeFood01", 0f, 2f);
+        if (IsInvoking("MakeFood02"))
+        {
+            InvokeRepeating("MakeFood02", 0f, 2f);
+        }
+        if (IsInvoking("MakeFood03"))
+        {
+            InvokeRepeating("MakeFood03", 0f, 2f);
+        }
+
+        InvokeRepeating("MakeMio", 0f, 2f);
+
+        FiverMio.SetActive(false);
+        fiverBar.fillAmount = 0;
+        MiniGameManager.Instance.fiverScore = 0;
+        MiniGameManager.Instance.IsFiver = false;
+    }
+
+    void MakeMio()
     {
         this.GetComponent<HariManager>().Born(LandObj);
     }
 
     public void GameStart()
     {
-        img_time.fillAmount = MiniGameManager.Instance.PlayTime;
+        img_time.fillAmount = 1;
         
         /*
         startPos01 = rail01.transform.position;
@@ -255,7 +338,7 @@ public class RailManager : MonoBehaviour
 
         InvokeRepeating("MakeFood01", 0f, 2f);
 
-        InvokeRepeating("MakeHari", 0f, 2f);
+        InvokeRepeating("MakeMio", 0f, 2f);
 
         boardColor.a = 1f;
 
@@ -273,7 +356,6 @@ public class RailManager : MonoBehaviour
     IEnumerator GameOver()
     {
         boardColor.a -= Time.deltaTime * 0.3f;
-        Debug.Log(boardColor.a);
         scoreBoard.transform.GetChild(1).GetComponent<Image>().color = boardColor;
 
         yield return new WaitForSeconds(0.1f);
