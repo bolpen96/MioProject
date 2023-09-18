@@ -4368,6 +4368,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d49d428ac56b5ed46ba1fc816834943b, type: 3}
   - {fileID: 21300000, guid: 1093499ccae0b97489be435c5bf79de2, type: 3}
   - {fileID: 21300000, guid: 7187b5233df93514c8a61f13bc2124ce, type: 3}
+  mioSprite:
+  - {fileID: 21300000, guid: 8ce9d6320aac9d84d8d463718a955262, type: 3}
+  - {fileID: 21300000, guid: bcd7fc3543286ff41abba98477432ca9, type: 3}
+  - {fileID: 21300000, guid: 421327835d1948846835a6a75899f85a, type: 3}
+  - {fileID: 21300000, guid: b5d3243e93c9e63448c5a24f69dc9f70, type: 3}
 --- !u!114 &1646064773
 MonoBehaviour:
   m_ObjectHideFlags: 0

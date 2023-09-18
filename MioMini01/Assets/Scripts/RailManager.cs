@@ -81,17 +81,15 @@ public class RailManager : MonoBehaviour
             lv = 0;
         }
        
+        if(MiniGameManager.Instance.Score >= 300)
+        {
+            
+        }else if(MiniGameManager.Instance.Score >= 700)
+        {
 
-        /*if (GameManager.Instance.railLv > 1)
-        {
-            newPos02 = Mathf.Repeat(Time.time * speed, posValue);
-            rail02.transform.position = startPos02 + (Vector2.left * newPos02);
         }
-        else if(GameManager.Instance.railLv > 2)
-        {
-            newPos03 = Mathf.Repeat(Time.time * speed, posValue);
-            rail03.transform.position = startPos03 + (Vector2.left * newPos03);
-        }*/
+
+
         if(lv > 0)
         {
             newPos02 = Mathf.Repeat(Time.time * speed, posValue);
