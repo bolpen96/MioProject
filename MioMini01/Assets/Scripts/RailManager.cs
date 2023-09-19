@@ -158,6 +158,7 @@ public class RailManager : MonoBehaviour
         {
             scoreBoard.SetActive(true);
             GameOver();
+            this.GetComponent<GameOverManager>().GameOver();
             MiniGameManager.Instance.GameOver = true;
         }
     }
