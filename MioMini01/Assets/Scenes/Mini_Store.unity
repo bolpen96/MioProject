@@ -4326,6 +4326,7 @@ GameObject:
   - component: {fileID: 1620814443}
   - component: {fileID: 1620814442}
   - component: {fileID: 1620814441}
+  - component: {fileID: 1620814444}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4407,6 +4408,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620814444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620814440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1646064768
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4558,7 @@ MonoBehaviour:
   fiverScore: 0
   IsFiver: 0
   isCorrect: 0
-  PlayTime: 5
+  PlayTime: 10
   GameOver: 0
   Tokken: 3
   MaxTokken: 5
@@ -4561,6 +4578,8 @@ MonoBehaviour:
   txt_lv: {fileID: 1059026697}
   img_expbar: {fileID: 1366960669}
   txt_money: {fileID: 2141750959}
+  isScoreCheck: 0
+  coinCheck: 0
   img_player: {fileID: 898340422}
   txt_player: {fileID: 2114701111}
   img_mio: {fileID: 169544935}

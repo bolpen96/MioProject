@@ -13,7 +13,7 @@ public class MiniGameManager : MonoBehaviour
     public Sprite[] LotMio;
     public List<Sprite> mioList;
 
-    public float Score = 0;
+    public int Score = 0;
 
     public float fiverScore = 0;
     public bool IsFiver;

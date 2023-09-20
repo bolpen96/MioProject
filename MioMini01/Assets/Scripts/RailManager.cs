@@ -159,10 +159,12 @@ public class RailManager : MonoBehaviour
             scoreBoard.activeSelf == false)
         {
             scoreBoard.SetActive(true);
+            ObjectClear();
             GameOver();
             this.GetComponent<GameOverManager>().GameOver();
             MiniGameManager.Instance.GameOver = true;
-            ObjectClear();
+            
+
         }
 
         this.GetComponent<GameOverManager>().TokenView();
@@ -182,6 +184,17 @@ public class RailManager : MonoBehaviour
         {
             txt_tkTime.gameObject.SetActive(false);
         }
+
+        //스코어 보드의 터치를 통한 빠른 상호작용
+        if(scoreBoard.activeSelf && !this.GetComponent<GameOverManager>().coinCheck)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                this.GetComponent<GameOverManager>().fastScoreBoard();
+                this.GetComponent<GameOverManager>().coinCheck = true;
+            }
+        }
+        
     }
 
     public void lvUp()
@@ -310,6 +323,8 @@ public class RailManager : MonoBehaviour
         if(MiniGameManager.Instance.Tokken > 0)
         {
             img_time.fillAmount = 1;
+            fiverBar.fillAmount = 0;
+
 
             InvokeRepeating("MakeFood01", 0f, 2f);
 
