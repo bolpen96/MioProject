@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class RailManager : MonoBehaviour
 {
@@ -42,7 +43,8 @@ public class RailManager : MonoBehaviour
     float smoothValue;
     float smoothSpeed = 10f;
 
-
+    public TextMeshProUGUI txt_tkTime;
+    float tktimeValue = 300;
 
     private void Start()
     {
@@ -160,6 +162,25 @@ public class RailManager : MonoBehaviour
             GameOver();
             this.GetComponent<GameOverManager>().GameOver();
             MiniGameManager.Instance.GameOver = true;
+            ObjectClear();
+        }
+
+        this.GetComponent<GameOverManager>().TokenView();
+
+        if(MiniGameManager.Instance.Tokken != MiniGameManager.Instance.MaxTokken)
+        {
+            txt_tkTime.gameObject.SetActive(true);
+            tktimeValue -= Time.deltaTime;
+            txt_tkTime.text = ((int)(tktimeValue/60)).ToString() + " : " + ((int)(tktimeValue % 60)).ToString();
+            
+            if (tktimeValue < 0)
+            {
+                tktimeValue = 300;
+                MiniGameManager.Instance.Tokken++;
+            }
+        }else
+        {
+            txt_tkTime.gameObject.SetActive(false);
         }
     }
 
@@ -286,14 +307,24 @@ public class RailManager : MonoBehaviour
 
     public void GameStart()
     {
-        img_time.fillAmount = 1;
+        if(MiniGameManager.Instance.Tokken > 0)
+        {
+            img_time.fillAmount = 1;
+
+            InvokeRepeating("MakeFood01", 0f, 2f);
+
+            InvokeRepeating("MakeMio", 0f, 2f);
+
+            scoreBoard.SetActive(false);
+            MiniGameManager.Instance.GameOver = false;
+
+            MiniGameManager.Instance.Tokken--;
+        }
+        else
+        {
+            
+        }
         
-        InvokeRepeating("MakeFood01", 0f, 2f);
-
-        InvokeRepeating("MakeMio", 0f, 2f);
-
-        scoreBoard.SetActive(false);
-        MiniGameManager.Instance.GameOver = false;
     }
 
     public void PlayTimeCheck()
@@ -318,6 +349,24 @@ public class RailManager : MonoBehaviour
 
         MiniGameManager.Instance.GameOver = false;
 
+    }
+
+    void ObjectClear()
+    {
+        GameObject[] destroyMio;
+        GameObject[] destroyFood;
+        destroyMio = GameObject.FindGameObjectsWithTag("Mio");
+        destroyFood = GameObject.FindGameObjectsWithTag("Food");
+
+        foreach (GameObject oneObject in destroyMio)
+        {
+            Destroy(oneObject);
+        }
+
+        foreach(GameObject oneObject in destroyFood)
+        {
+            Destroy(oneObject);
+        }
     }
 
 }

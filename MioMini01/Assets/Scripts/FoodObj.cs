@@ -14,9 +14,6 @@ public class FoodObj : MonoBehaviour
 
     Sprite food;
 
-    int nonNum = 0;
-    int[] nonFood;
-
     private void Start()
     {
         food = this.GetComponent<Image>().sprite;
@@ -53,14 +50,16 @@ public class FoodObj : MonoBehaviour
             //정확한 음식을 주었을 때
             for (int i = 0; i < mio.Length; i++)
             {
-
                 if (mio[i].GetComponent<Image>().sprite == food)
                 {
                     obj.GetComponent<RailManager>().AddFoodScore();
                     ranHappy = UnityEngine.Random.Range(0, MiniGameManager.Instance.H_Icon.Length);
                     mio[i].GetComponent<Image>().sprite = MiniGameManager.Instance.H_Icon[ranHappy];
                     mio[i].tag = "Untagged";
-                    Destroy(mio[i].transform.parent.transform.parent.gameObject, 3f);
+                    MiniGameManager.Instance.mioList.Add(
+                        mio[i].transform.parent.transform.parent.GetComponent<Image>().sprite);
+                    MiniGameManager.Instance.LotMio = MiniGameManager.Instance.mioList.ToArray();
+                    Destroy(mio[i].transform.parent.transform.parent.gameObject, 2f);
                     return;
                 }
             }
@@ -73,9 +72,10 @@ public class FoodObj : MonoBehaviour
                 ranSad = UnityEngine.Random.Range(0, MiniGameManager.Instance.S_Icon.Length);
                 mio[ranNone].GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranSad];
                 mio[ranNone].tag = "Untagged";
-                Destroy(mio[ranNone].transform.parent.transform.parent.gameObject, 3f);
+                Destroy(mio[ranNone].transform.parent.transform.parent.gameObject, 2f);
                 return;
             }
+
         }
         else if(MiniGameManager.Instance.IsFiver)
         {
@@ -83,8 +83,6 @@ public class FoodObj : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
-        
 
     }
 }

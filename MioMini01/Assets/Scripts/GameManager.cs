@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour
     public int Level;
     public float Exp;
     public float Score;
+    public int MinigameCoin;
 
     public int State = 0;
 
     public int railLv;
     public float GameTime;
+
+    public float minigameTime;
 
     private void Awake()
     {
