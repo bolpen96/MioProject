@@ -12,9 +12,6 @@ public class HariManager : MonoBehaviour
     int ranNum;
     int ranSprite;
 
-    float width;
-    float height;
-
     float ranWidth;
     float ranHeight;
 
@@ -23,8 +20,6 @@ public class HariManager : MonoBehaviour
     //けし 社発
     public void Born(GameObject parentObj)
     {
-        width = parentObj.GetComponent<RectTransform>().rect.width;
-        height = parentObj.GetComponent<RectTransform>().rect.height;
         ranWidth = Random.Range(-443,355);
         ranHeight = Random.Range(-287, 197);
         

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -164,7 +165,8 @@ public class GameOverManager : MonoBehaviour
     
     public void QuitGame()
     {
-
+        GameManager.Instance.State = 3;
+        SceneManager.LoadScene(1);
     }
 
     public void AddTokenEvent()
