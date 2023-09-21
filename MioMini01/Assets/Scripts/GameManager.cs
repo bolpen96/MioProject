@@ -25,15 +25,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    /*var obj = FindAnyObjectByType<GameManager>();
-    if(object.Length == 1)
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-    else
-    {
-        Destroy(gameObject);
-    }*/
    
 }
 
