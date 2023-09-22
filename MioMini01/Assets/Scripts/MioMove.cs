@@ -6,10 +6,11 @@ using UnityEngine;
 public class MioMove : MonoBehaviour
 {
     float rotationTime = 5f;
-    
+    Quaternion defalutRotation;
+
     private void Start()
     {
-        
+        defalutRotation = this.transform.rotation;
     }
     // Update is called once per frame
     void Update()
