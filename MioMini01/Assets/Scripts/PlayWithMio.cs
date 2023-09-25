@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class PlayWithMio : MonoBehaviour
 {
-    public GameObject playing_View;
+    public Image Img_play;
     public Scrollbar scrBar;
     public Transform tr_scrBar;
     public Image Img_zone;
-    bool isPlayEnd;
+    bool isPlaycool;
 
     private void Update()
     {
@@ -27,7 +27,12 @@ public class PlayWithMio : MonoBehaviour
 
     public void setPlay()
     {
-        StartCoroutine(Playing());
+        if(!isPlaycool)
+        {
+            StartCoroutine(Playing());
+            StartCoroutine(PlayCoolTime());
+        }
+        
     }
 
     public IEnumerator Playing()
@@ -44,7 +49,7 @@ public class PlayWithMio : MonoBehaviour
 
         while (MainManager.instance.PlayingTime > 0)
         {
-            MainManager.instance.PlayingTime -= Time.deltaTime * 10f;
+            MainManager.instance.PlayingTime -= Time.deltaTime * 5f;
             if (scrBar.value <= 0)
             {
                 MainManager.instance.isPlaying = false;
@@ -53,23 +58,24 @@ public class PlayWithMio : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
-        
+
         MainManager.instance.isPlaying = false;
-        isPlayEnd = true;
         yield return null;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    IEnumerator PlayCoolTime()
     {
-        Debug.Log(collision.gameObject.name);
+        isPlaycool = true;
+        Img_play.fillAmount = 0;
 
-        if (!MainManager.instance.isPlaying && isPlayEnd)
+        while(Img_play.fillAmount < 1)
         {
-            
+            Img_play.fillAmount += Time.deltaTime * 0.1f;
 
-
-
-            isPlayEnd = false;
+            yield return new WaitForSeconds(0.1f);
         }
+
+        isPlaycool = false;
+        yield return null;
     }
 }

@@ -19,7 +19,7 @@ public class MainManager : MonoBehaviour
 
     public bool isPlaying;
     public float PlayingTime;
-
+    public int result_zone;
 
 
     private void Awake()
