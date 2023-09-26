@@ -13,10 +13,9 @@ public class SaveManager : MonoBehaviour
         //플레이어 정보 및 인벤토리에서 불러오는 정보
         SaveData sd = new SaveData(
             GameManager.Instance.PlayerName,
-            5,
-            0.4f,
-            20f,
-            new Vector3(1,2,3));
+            GameManager.Instance.Level,
+            GameManager.Instance.Exp,
+            GameManager.Instance.Score);
 
         string jsonString = DataToJson(sd);
         string encryptString = Encrypt(jsonString);

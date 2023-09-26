@@ -46,6 +46,8 @@ public class RailManager : MonoBehaviour
     public TextMeshProUGUI txt_tkTime;
     float tktimeValue = 300;
 
+    public GameObject alert_Gamestart;
+
     private void Start()
     {
         startPos01 = rail01.transform.position;
@@ -57,10 +59,7 @@ public class RailManager : MonoBehaviour
         startPos03 = rail03.transform.position;
         startPos03.x += 327;
 
-        InvokeRepeating("MakeFood01", 0f, 1f);
-
-        InvokeRepeating("MakeMio", 0f, 2f);
-
+        alert_Gamestart.SetActive(true);
     }
 
     private void Update()
@@ -190,13 +189,14 @@ public class RailManager : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                this.GetComponent<GameOverManager>().fastScoreBoard();
+                //this.GetComponent<GameOverManager>().fastScoreBoard();
                 this.GetComponent<GameOverManager>().coinCheck = true;
             }
         }
         
     }
 
+    //레일 추가 이벤트
     public void lvUp()
     {
         if (lv == 0)
@@ -223,6 +223,7 @@ public class RailManager : MonoBehaviour
         
     }
 
+    //음식 소환
     void MakeFood01()
     {
         this.GetComponent<FoodManager>().SpawnFood(targetRail01);
@@ -236,6 +237,8 @@ public class RailManager : MonoBehaviour
     {
         this.GetComponent<FoodManager>().SpawnFood(targetRail03);
     }
+
+    //음식 먹었을 때 이벤트
     public void AddFoodScore()
     {
         MiniGameManager.Instance.isCorrect = 1;
@@ -245,6 +248,7 @@ public class RailManager : MonoBehaviour
         txt_Score.text = MiniGameManager.Instance.Score.ToString();
     }
 
+    //음식을 잘못먹였을 때 이벤트
     public void DelFoodScore()
     {
         MiniGameManager.Instance.isCorrect = -1;
@@ -252,6 +256,7 @@ public class RailManager : MonoBehaviour
         MiniGameManager.Instance.fiverScore = 0f;
     }
 
+    //피버타임때 
     public void FiverScore()
     {
         MiniGameManager.Instance.Score += 20;
@@ -288,6 +293,7 @@ public class RailManager : MonoBehaviour
 
     }
 
+    //피버가 끝날 때
     void FiverEnd()
     {
         CancelInvoke("MakeFood01");
@@ -313,11 +319,13 @@ public class RailManager : MonoBehaviour
         MiniGameManager.Instance.IsFiver = false;
     }
 
+    //미오 생성 이벤트
     void MakeMio()
     {
         this.GetComponent<HariManager>().Born(LandObj);
     }
 
+    //게임시작 이벤트
     public void GameStart()
     {
         if(MiniGameManager.Instance.Tokken > 0)
@@ -342,11 +350,13 @@ public class RailManager : MonoBehaviour
         
     }
 
+    
     public void PlayTimeCheck()
     {
 
     }
-
+    
+    //게임오버 이벤트
     void GameOver()
     {
         rail01.color = new Color32(77, 77, 77, 255);
@@ -366,6 +376,7 @@ public class RailManager : MonoBehaviour
 
     }
 
+    //오브젝트 클리어
     void ObjectClear()
     {
         GameObject[] destroyMio;

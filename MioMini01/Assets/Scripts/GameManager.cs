@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-   
+    private void Start()
+    {
+        SaveManager.Load();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveManager.Save();
+    }
 }
 

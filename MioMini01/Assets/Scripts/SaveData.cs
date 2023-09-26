@@ -13,13 +13,12 @@ public class SaveData
     [SerializeField] private Vector3 lastPosition;
 
     //»ý¼ºÀÚ
-    public SaveData(string t_PlayerName, int t_Level, float t_Exp, float t_Score, Vector3 t_lastPosition)
+    public SaveData(string t_PlayerName, int t_Level, float t_Exp, float t_Score)
     {
         PlayerName = t_PlayerName;
         Level = t_Level;
         Exp = t_Exp;
         Score = t_Score;
 
-        lastPosition = new Vector3(t_lastPosition.x, t_lastPosition.y, t_lastPosition.z);
     }
 }

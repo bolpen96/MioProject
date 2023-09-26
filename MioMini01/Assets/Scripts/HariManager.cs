@@ -25,15 +25,14 @@ public class HariManager : MonoBehaviour
         
         ranNum = Random.Range(0, food.Length);
         ranSprite = Random.Range(0,mioSprite.Length);
-
-        GameObject temp = Instantiate(mio, parentObj.transform);
-        
         //말풍선의 음식 표시
         mio.transform.Find("Img_think").GetChild(0).GetComponent<Image>().sprite = food[ranNum];
 
         //미오 모습 표시
         mio.GetComponent<Image>().sprite = mioSprite[ranSprite];
-    
+
+        GameObject temp = Instantiate(mio, parentObj.transform);
+
         //부모 오브젝트의 일정한 위치로 이동
         temp.transform.localPosition = new Vector2(ranWidth, ranHeight);
     }

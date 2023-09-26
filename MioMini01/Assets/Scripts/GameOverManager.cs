@@ -102,23 +102,28 @@ public class GameOverManager : MonoBehaviour
             if(cnt > cnt2 && cnt > cnt3 && cnt>cnt4)
             {
                 img_mio.sprite = this.GetComponent<HariManager>().mioSprite[0];
+                txt_mio.text = this.GetComponent<HariManager>().mioSprite[0].ToString();
             }
             else if(cnt2 > cnt && cnt2 > cnt3 && cnt2 > cnt4)
             {
                 img_mio.sprite = this.GetComponent<HariManager>().mioSprite[1];
+                txt_mio.text = this.GetComponent<HariManager>().mioSprite[1].ToString();
             }
             else if(cnt3 > cnt && cnt3 > cnt2 && cnt3 > cnt4)
             {
                 img_mio.sprite = this.GetComponent<HariManager>().mioSprite[2];
+                txt_mio.text = this.GetComponent<HariManager>().mioSprite[2].ToString();
             }
             else if(cnt4 > cnt && cnt4 > cnt2 && cnt4 > cnt3)
             {
                 img_mio.sprite = this.GetComponent<HariManager>().mioSprite[3];
+                txt_mio.text = this.GetComponent<HariManager>().mioSprite[3].ToString();
             }
             else
             {
                 int ranNum = Random.Range(0, 3);
                 img_mio.sprite = this.GetComponent<HariManager>().mioSprite[ranNum];
+                txt_mio.text = this.GetComponent<HariManager>().mioSprite[ranNum].ToString();
             }
 
             //점수 표시

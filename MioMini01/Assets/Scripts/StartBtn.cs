@@ -12,7 +12,7 @@ public class StartBtn : MonoBehaviour
 
    public void OnClick()
    {
-        GameManager.Instance.State = 2;
+        GameManager.Instance.State = 3;
         GameManager.Instance.PlayerName = inf.text;
         SceneManager.LoadScene(1);
    }

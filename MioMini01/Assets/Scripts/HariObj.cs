@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class HariObj : MonoBehaviour
 {
     int ranNum;
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        ranNum = Random.Range(0,MiniGameManager.Instance.S_Icon.Length);
-        if(Time.deltaTime > 10)
+        ranNum = Random.Range(0, MiniGameManager.Instance.S_Icon.Length);
+        if (Time.deltaTime > 10)
         {
             this.GetComponent<Image>().sprite = MiniGameManager.Instance.S_Icon[ranNum];
             this.tag = "Untagged";
