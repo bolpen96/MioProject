@@ -24,9 +24,6 @@ public class MiniGameManager : MonoBehaviour
 
     public bool GameOver;
 
-    public int Tokken = 5;
-    public int MaxTokken = 5;
-    public float tokkenTime;
 
     private void Awake()
     {

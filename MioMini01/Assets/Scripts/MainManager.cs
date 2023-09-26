@@ -14,40 +14,156 @@ public class MainManager : MonoBehaviour
     public Sprite[] emoCon;
     public Sprite[] mioTalk;
 
+    public Image[] foods;
+    Image Img_food;
+    bool isFoodck = false;
 
-    public TextMeshProUGUI txt_hgy;
-    public float maxHgy;
-    public float presentHgy;
+    public Image[] cleans;
+    Image Img_clean;
+    bool isCleanck = false;
+
 
     public bool isPlaying;
     public float PlayingTime;
     public int result_zone;
 
+    public TextMeshProUGUI txt_TokenValue;
+    public TextMeshProUGUI txt_tokenTime;
 
     private void Awake()
     {
         instance = this;
     }
 
+    private void Update()
+    {
+        //배고픔 줄어드는 이벤트
+        StartCoroutine(lessHgy());
+
+        //청결도 줄어드는 이벤트
+        StartCoroutine(lessClean());
+
+        //text UI 관련
+        showTokenTxt(txt_TokenValue, txt_tokenTime);
+    }
+
+    //먹이먹이기 버튼 이벤트
     public void onClickEat()
     {
-        if(presentHgy != maxHgy)
-        {
-            presentHgy += 0.1f;
 
-            txt_hgy.text = presentHgy.ToString() + " / " + maxHgy.ToString();
+        for (int i = 0; i < foods.Length; i++)
+        {
+            if (foods[i].fillAmount < 1)
+            {
+                Img_food = foods[i];
+                break;
+            }
+
+        }
+
+        if (Img_food != null)
+        {
+            Img_food.fillAmount += 0.1f;
         }
         else
         {
-            GameObject Obj_talk = Instantiate(talkObj);
-            Obj_talk.transform.SetParent(transform);
+            Debug.Log("mio is full");
         }
-        
+
+
     }
 
+    //미니게임 진입 이벤트
     public void onMiniGame()
     {
         GameManager.Instance.State = 2;
         SceneManager.LoadScene(1);
+    }
+
+    public void showTokenTxt(TextMeshProUGUI tokenValue, TextMeshProUGUI tokenTime)
+    {
+        tokenValue.text = GameManager.Instance.Tokken.ToString() + " / " + GameManager.Instance.MaxTokken.ToString();
+        tokenTime.text = ((int)(GameManager.Instance.tokkenTime / 60)).ToString() +
+                " : " + ((int)(GameManager.Instance.tokkenTime % 60)).ToString();
+
+        if (GameManager.Instance.Tokken != GameManager.Instance.MaxTokken)
+        {
+            tokenTime.gameObject.SetActive(false);
+            GameManager.Instance.tokkenTime -= Time.deltaTime;
+
+            if (GameManager.Instance.tokkenTime < 0)
+            {
+                GameManager.Instance.tokkenTime = GameManager.Instance.maxTokkenTime;
+                GameManager.Instance.Tokken++;
+            }
+        }
+        else
+        {
+            tokenTime.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator lessHgy()
+    {
+        if (!isFoodck)
+        {
+            for (int i = foods.Length - 1; i >= 0; i--)
+            {
+                if (foods[i].fillAmount > 0)
+                {
+                    Img_food = foods[i];
+                    isFoodck = true;
+                    break;
+                }
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        else
+        {
+            if (Img_food.fillAmount > 0)
+            {
+                //1개당 10초
+                Img_food.fillAmount -= Time.deltaTime * 0.1f;
+            }
+            else
+            {
+                isFoodck = false;
+            }
+
+        }
+
+        yield return null;
+    }
+
+    IEnumerator lessClean()
+    {
+        if (!isCleanck)
+        {
+            for (int i = cleans.Length - 1; i >= 0; i--)
+            {
+                if (cleans[i].fillAmount > 0)
+                {
+                    Img_clean = cleans[i];
+                    isCleanck = true;
+                    break;
+                }
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        else
+        {
+            if (Img_clean.fillAmount > 0)
+            {
+                //1개당 20초
+                Img_clean.fillAmount -= Time.deltaTime * 0.05f;
+            }
+            else
+            {
+                isCleanck = false;
+            }
+
+        }
+
+        yield return null;
     }
 }

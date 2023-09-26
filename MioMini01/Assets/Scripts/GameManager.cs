@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
 
     public float minigameTime;
 
+    public int Tokken = 5;
+    public int MaxTokken = 5;
+    public float tokkenTime;
+    public float maxTokkenTime = 300;
+
     private void Awake()
     {
         Instance = this; //변수 초기화
@@ -34,5 +39,7 @@ public class GameManager : MonoBehaviour
     {
         SaveManager.Save();
     }
+
+    
 }
 

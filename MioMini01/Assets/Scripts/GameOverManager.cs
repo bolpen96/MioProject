@@ -179,12 +179,6 @@ public class GameOverManager : MonoBehaviour
 
     }
 
-    public void TokenView()
-    {
-        txt_token.text =
-                MiniGameManager.Instance.Tokken.ToString() + " / " + MiniGameManager.Instance.MaxTokken.ToString();
-    }
-
     //경험치 증가 및 경험치에 따른 레벨 변화
     IEnumerator ExpEvent()
     {

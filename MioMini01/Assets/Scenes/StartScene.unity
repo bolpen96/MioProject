@@ -1458,7 +1458,15 @@ MonoBehaviour:
   Level: 0
   Exp: 0
   Score: 0
+  MinigameCoin: 0
   State: 1
+  railLv: 0
+  GameTime: 0
+  minigameTime: 0
+  Tokken: 5
+  MaxTokken: 5
+  tokkenTime: 300
+  maxTokkenTime: 300
 --- !u!4 &1539807315
 Transform:
   m_ObjectHideFlags: 0

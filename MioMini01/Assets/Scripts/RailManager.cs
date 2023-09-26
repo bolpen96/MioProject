@@ -43,8 +43,8 @@ public class RailManager : MonoBehaviour
     float smoothValue;
     float smoothSpeed = 10f;
 
+    public TextMeshProUGUI txt_tkValue;
     public TextMeshProUGUI txt_tkTime;
-    float tktimeValue = 300;
 
     public GameObject alert_Gamestart;
 
@@ -166,26 +166,10 @@ public class RailManager : MonoBehaviour
 
         }
 
-        this.GetComponent<GameOverManager>().TokenView();
-
-        if(MiniGameManager.Instance.Tokken != MiniGameManager.Instance.MaxTokken)
-        {
-            txt_tkTime.gameObject.SetActive(true);
-            tktimeValue -= Time.deltaTime;
-            txt_tkTime.text = ((int)(tktimeValue/60)).ToString() + " : " + ((int)(tktimeValue % 60)).ToString();
-            
-            if (tktimeValue < 0)
-            {
-                tktimeValue = 300;
-                MiniGameManager.Instance.Tokken++;
-            }
-        }else
-        {
-            txt_tkTime.gameObject.SetActive(false);
-        }
+        MainManager.instance.showTokenTxt(txt_tkValue, txt_tkTime);
 
         //스코어 보드의 터치를 통한 빠른 상호작용
-        if(scoreBoard.activeSelf && !this.GetComponent<GameOverManager>().coinCheck)
+        if (scoreBoard.activeSelf && !this.GetComponent<GameOverManager>().coinCheck)
         {
             if (Input.GetMouseButton(0))
             {
@@ -328,7 +312,7 @@ public class RailManager : MonoBehaviour
     //게임시작 이벤트
     public void GameStart()
     {
-        if(MiniGameManager.Instance.Tokken > 0)
+        if(GameManager.Instance.Tokken > 0)
         {
             img_time.fillAmount = 1;
             fiverBar.fillAmount = 0;
@@ -341,7 +325,7 @@ public class RailManager : MonoBehaviour
             scoreBoard.SetActive(false);
             MiniGameManager.Instance.GameOver = false;
 
-            MiniGameManager.Instance.Tokken--;
+            GameManager.Instance.Tokken--;
         }
         else
         {

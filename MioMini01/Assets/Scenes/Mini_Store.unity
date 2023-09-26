@@ -5065,7 +5065,7 @@ MonoBehaviour:
   speed: 500
   posValue: 850
   txt_tkTime: {fileID: 97516647}
-  alert_Gamestart: {fileID: 0}
+  alert_Gamestart: {fileID: 564907108}
 --- !u!114 &1646064771
 MonoBehaviour:
   m_ObjectHideFlags: 0
