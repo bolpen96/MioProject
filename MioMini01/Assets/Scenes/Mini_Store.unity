@@ -5064,6 +5064,7 @@ MonoBehaviour:
   LandObj: {fileID: 920115999}
   speed: 500
   posValue: 850
+  txt_tkValue: {fileID: 0}
   txt_tkTime: {fileID: 97516647}
   alert_Gamestart: {fileID: 564907108}
 --- !u!114 &1646064771
@@ -5139,9 +5140,6 @@ MonoBehaviour:
   isCorrect: 0
   PlayTime: 10
   GameOver: 0
-  Tokken: 5
-  MaxTokken: 5
-  tokkenTime: 300
 --- !u!114 &1646064774
 MonoBehaviour:
   m_ObjectHideFlags: 0

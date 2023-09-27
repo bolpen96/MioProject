@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,13 +17,18 @@ public class MainManager : MonoBehaviour
     public Sprite[] mioTalk;
 
     public Image[] foods;
+    public float hungryValue;
     Image Img_food;
+    Image Img_upfood;
+    string str_food;
     bool isFoodck = false;
+    public float foodScore;
 
     public Image[] cleans;
+    public float cleanValue;
     Image Img_clean;
+    string str_clean;
     bool isCleanck = false;
-
 
     public bool isPlaying;
     public float PlayingTime;
@@ -35,6 +42,11 @@ public class MainManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        setMioInfo();
+    }
+
     private void Update()
     {
         //배고픔 줄어드는 이벤트
@@ -45,32 +57,47 @@ public class MainManager : MonoBehaviour
 
         //text UI 관련
         showTokenTxt(txt_TokenValue, txt_tokenTime);
+
+        //놀아주기 결과
+        if(result_zone != -1)
+        {
+            CkPlayingScore();
+        }
+    }
+
+    public void setMioInfo()
+    {
+        for(int i = 0; i < (int)hungryValue; i++)
+        {
+            foods[i].fillAmount = 1;
+            hungryValue--;
+        }
+
+        for(int i = 0; i<(int)cleanValue; i++)
+        {
+            cleans[i].fillAmount = 1;
+            cleanValue--;
+        }
+
     }
 
     //먹이먹이기 버튼 이벤트
     public void onClickEat()
     {
-
-        for (int i = 0; i < foods.Length; i++)
+        if(Img_food.fillAmount + foodScore >= 1)
         {
-            if (foods[i].fillAmount < 1)
-            {
-                Img_food = foods[i];
-                break;
-            }
+            str_food = Regex.Replace(Img_food.ToString(), @"[^0-9]", "");
 
-        }
+            Img_food.fillAmount = 1;
+            Img_upfood = foods[Convert.ToInt32(str_food)];
+            Img_upfood.fillAmount += 0.05f;
 
-        if (Img_food != null)
-        {
-            Img_food.fillAmount += 0.1f;
+            isFoodck = false;
         }
         else
         {
-            Debug.Log("mio is full");
+            Img_food.fillAmount += foodScore;
         }
-
-
     }
 
     //미니게임 진입 이벤트
@@ -162,6 +189,35 @@ public class MainManager : MonoBehaviour
                 isCleanck = false;
             }
 
+        }
+
+        yield return null;
+    }
+
+    //놀아주기 결과 값 적용
+    IEnumerator CkPlayingScore()
+    {
+        if(result_zone == 1)
+        {
+            cleanValue = GameManager.Instance.cleanMaxValue;
+            for (int i = 0; i < (int)cleanValue; i++)
+            {
+                cleans[i].fillAmount = 1;
+                cleanValue--;
+                yield return new WaitForSeconds(0.1f);
+            }
+            result_zone = -1;
+        }
+        else
+        {
+            str_food = Regex.Replace(Img_clean.ToString(), @"[^0-9]", "");
+
+            for(int i = 0; i < Convert.ToInt32(str_food)+2; i++)
+            {
+                cleans[i].fillAmount = 1;
+                yield return new WaitForSeconds(0.1f);
+            }
+            isCleanck = false;
         }
 
         yield return null;

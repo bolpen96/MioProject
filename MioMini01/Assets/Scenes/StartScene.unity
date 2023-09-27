@@ -1467,6 +1467,8 @@ MonoBehaviour:
   MaxTokken: 5
   tokkenTime: 300
   maxTokkenTime: 300
+  foodMaxValue: 5
+  cleanMaxValue: 5
 --- !u!4 &1539807315
 Transform:
   m_ObjectHideFlags: 0
