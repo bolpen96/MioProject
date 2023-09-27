@@ -32,6 +32,7 @@ public class PlayWithMio : MonoBehaviour
 
     public void setPlay()
     {
+        onPlayVideo();
         StartCoroutine(Playing());
         StartCoroutine(PlayCoolTime());
     }
@@ -41,7 +42,6 @@ public class PlayWithMio : MonoBehaviour
     {
         scrBar.value = 1;
         MainManager.instance.isPlaying = true;
-        onPlayVideo();
         GameObject createZone = Instantiate(Img_zone).gameObject;
         createZone.transform.SetParent(tr_scrBar, false);
         createZone.transform.SetAsFirstSibling();
@@ -49,10 +49,12 @@ public class PlayWithMio : MonoBehaviour
 
         createZone.transform.localPosition = new Vector3(ranPosX, createZone.transform.localPosition.y);
 
-        while (MainManager.instance.PlayingTime > 0)
+        float playingTime = MainManager.instance.PlayingTime;
+
+        while (playingTime > 0)
         {
-            MainManager.instance.PlayingTime -= Time.deltaTime * 10f;
-            Debug.Log(MainManager.instance.PlayingTime);
+            playingTime -= Time.deltaTime * 10f;
+            Debug.Log(playingTime);
             if (scrBar.value <= 0)
             {
                 MainManager.instance.isPlaying = false;
@@ -76,7 +78,7 @@ public class PlayWithMio : MonoBehaviour
 
         while(Img_play.fillAmount < 1)
         {
-            Img_play.fillAmount += Time.deltaTime * 0.1f;
+            Img_play.fillAmount += Time.deltaTime * 1f;
 
             yield return new WaitForSeconds(0.1f);
         }

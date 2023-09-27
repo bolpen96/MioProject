@@ -37,6 +37,7 @@ public class MainManager : MonoBehaviour
     public TextMeshProUGUI txt_TokenValue;
     public TextMeshProUGUI txt_tokenTime;
 
+    
     private void Awake()
     {
         instance = this;
