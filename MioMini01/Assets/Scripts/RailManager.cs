@@ -51,10 +51,10 @@ public class RailManager : MonoBehaviour
 
 
     bool isColorEvent;
-    Color colorR;
-    Color colorG;
-    Color colorB;
-
+    bool IscolorR;
+    bool IscolorG;
+    bool IscolorB;
+    Color currentColor = Color.white;
 
     private void Start()
     {
@@ -67,7 +67,6 @@ public class RailManager : MonoBehaviour
         startPos03 = rail03.transform.position;
         startPos03.x += 327;
 
-        colorR = btn_railAdd.GetComponent<Image>().color;
         MiniGameManager.Instance.GameOver = true;
         alert_Gamestart.SetActive(true);
     }
@@ -190,7 +189,6 @@ public class RailManager : MonoBehaviour
 
         if(MiniGameManager.Instance.RailCoin > 0 && MiniGameManager.Instance.GameOver == false && isColorEvent == false)
         {
-            Debug.Log(isColorEvent);
             StartCoroutine(OnRailAddBtn());
             isColorEvent = true;
         }
@@ -203,7 +201,6 @@ public class RailManager : MonoBehaviour
         StopCoroutine(OnRailAddBtn());
         isColorEvent = false;
         MiniGameManager.Instance.RailCoin--;
-        btn_railAdd.GetComponent<Image>().color = new Color(0, 0, 0, 1);
 
         if (lv == 0)
         {
@@ -358,42 +355,66 @@ public class RailManager : MonoBehaviour
 
     IEnumerator OnRailAddBtn()
     {
-        colorR = new Color(136, 255, 255);
-        colorG = new Color(255,136,255);
-        colorB = new Color(255, 255, 136);
 
-        Color currentColor = btn_railAdd.GetComponent<Image>().color;
-        float progress = 0;
-        float speed = 0.02f / 5;
-        while (true)
+        float prog = 0;
+        float speed = 0.1f / 5;
+        while (prog >= 0)
         {
-            Debug.Log(progress);
-            while (progress < 1)
+            while (prog < 1)
             {
-                currentColor = Color.Lerp(colorR, colorG, progress);
+                Debug.Log("R");
+                currentColor = Color.Lerp(Color.red, Color.blue, prog);
                 btn_railAdd.GetComponent<Image>().color = currentColor;
-                progress += speed;
+                prog += speed;
+                if (MiniGameManager.Instance.RailCoin < 1 || MiniGameManager.Instance.GameOver == true)
+                {
+                    btn_railAdd.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+                    btn_railAdd.transform.GetChild(0).GetComponent<Text>().color = Color.black;
+                    break;
+                }
+                yield return new WaitForSeconds(0.01f);
+            }
+            prog = 0;
+            while (prog < 1)
+            {
+                Debug.Log("G");
+                currentColor = Color.Lerp(Color.blue, Color.yellow, prog);
+                btn_railAdd.GetComponent<Image>().color = currentColor;
+                prog += speed;
+                if (MiniGameManager.Instance.RailCoin < 1 || MiniGameManager.Instance.GameOver == true)
+                {
+                    btn_railAdd.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+                    btn_railAdd.transform.GetChild(0).GetComponent<Text>().color = Color.black;
+                    break;
+                }
+                yield return new WaitForSeconds(0.01f);
+            }
+            prog = 0;
+            while (prog < 1)
+            {
+                Debug.Log("B");
+                currentColor = Color.Lerp(Color.yellow, Color.red, prog);
+                btn_railAdd.GetComponent<Image>().color = currentColor;
+                prog += speed;
+                if (MiniGameManager.Instance.RailCoin < 1 || MiniGameManager.Instance.GameOver == true)
+                {
+                    btn_railAdd.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+                    btn_railAdd.transform.GetChild(0).GetComponent<Text>().color = Color.black;
+                    break;
+                }
                 yield return new WaitForSeconds(0.01f);
             }
 
-            while (1 <= progress && progress < 2)
+            if (MiniGameManager.Instance.RailCoin < 1 || MiniGameManager.Instance.GameOver == true)
             {
-                currentColor = Color.Lerp(colorG, colorB, progress);
-                btn_railAdd.GetComponent<Image>().color = currentColor;
-                progress += speed;
-                yield return new WaitForSeconds(0.01f);
+                btn_railAdd.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+                btn_railAdd.transform.GetChild(0).GetComponent<Text>().color = Color.black;
+                break;
             }
-
-            while (2 <= progress && progress < 3)
-            {
-                currentColor = Color.Lerp(colorB, colorR, progress);
-                btn_railAdd.GetComponent<Image>().color = currentColor;
-                progress += speed;
-                yield return new WaitForSeconds(0.01f);
-            }
-
-            progress = 0;
+            prog = 0;
             yield return new WaitForSeconds(0.01f);
+
+            
         }
         
        
@@ -417,9 +438,8 @@ public class RailManager : MonoBehaviour
         CancelInvoke("MakeMio");
         lv = 0;
 
-
-
-
+        StopCoroutine(OnRailAddBtn());
+        isColorEvent = false;
 
         MiniGameManager.Instance.GameOver = false;
 
