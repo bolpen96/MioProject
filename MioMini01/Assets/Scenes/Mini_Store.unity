@@ -955,7 +955,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: RAIL ADD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -982,10 +982,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1916,7 +1916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825609736}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: AddRailGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3611,7 +3611,7 @@ GameObject:
   - component: {fileID: 1214638020}
   - component: {fileID: 1214638019}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Btn_rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3632,10 +3632,10 @@ RectTransform:
   - {fileID: 348705508}
   m_Father: {fileID: 825609736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 555.0718, y: 104.076}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1214638019
 MonoBehaviour:
@@ -3706,7 +3706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.99882126, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5064,9 +5064,10 @@ MonoBehaviour:
   LandObj: {fileID: 920115999}
   speed: 500
   posValue: 850
-  txt_tkValue: {fileID: 0}
+  txt_tkValue: {fileID: 265559036}
   txt_tkTime: {fileID: 97516647}
   alert_Gamestart: {fileID: 564907108}
+  btn_railAdd: {fileID: 1214638017}
 --- !u!114 &1646064771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5135,6 +5136,7 @@ MonoBehaviour:
   LotMio: []
   mioList: []
   Score: 0
+  RailCoin: 1
   fiverScore: 0
   IsFiver: 0
   isCorrect: 0
@@ -5395,10 +5397,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1218856097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1736556372
 MonoBehaviour:
@@ -6256,10 +6258,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 990192106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2114701111
 MonoBehaviour:

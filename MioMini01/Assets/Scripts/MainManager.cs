@@ -59,11 +59,6 @@ public class MainManager : MonoBehaviour
         //text UI 관련
         showTokenTxt(txt_TokenValue, txt_tokenTime);
 
-        //놀아주기 결과
-        if(result_zone != -1)
-        {
-            CkPlayingScore();
-        }
     }
 
     public void setMioInfo()
@@ -196,8 +191,10 @@ public class MainManager : MonoBehaviour
     }
 
     //놀아주기 결과 값 적용
-    IEnumerator CkPlayingScore()
+    public IEnumerator CkPlayingScore()
     {
+        Debug.Log(result_zone);
+
         if(result_zone == 1)
         {
             cleanValue = GameManager.Instance.cleanMaxValue;
@@ -207,9 +204,8 @@ public class MainManager : MonoBehaviour
                 cleanValue--;
                 yield return new WaitForSeconds(0.1f);
             }
-            result_zone = -1;
         }
-        else
+        else if(result_zone == 0)
         {
             str_food = Regex.Replace(Img_clean.ToString(), @"[^0-9]", "");
 

@@ -54,7 +54,6 @@ public class PlayWithMio : MonoBehaviour
         while (playingTime > 0)
         {
             playingTime -= Time.deltaTime * 10f;
-            Debug.Log(playingTime);
             if (scrBar.value <= 0)
             {
                 MainManager.instance.isPlaying = false;
@@ -64,6 +63,8 @@ public class PlayWithMio : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
+
+        Destroy(createZone,3f);
         Vp.Stop();
         MainManager.instance.isPlaying = false;
         PlayingView.SetActive(false);
@@ -90,7 +91,6 @@ public class PlayWithMio : MonoBehaviour
     void onPlayVideo()
     {
         int ranNum = UnityEngine.Random.Range(0, 2);
-
 
         Vp.clip = clip[ranNum];
 

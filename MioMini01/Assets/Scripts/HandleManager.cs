@@ -20,7 +20,10 @@ public class HandleManager : MonoBehaviour
             {
                 MainManager.instance.result_zone = -1;
             }
+            Debug.Log(collision.gameObject.name);
 
+
+            StartCoroutine(MainManager.instance.CkPlayingScore());
         }
         
     }

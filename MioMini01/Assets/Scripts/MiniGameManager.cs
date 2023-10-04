@@ -14,6 +14,7 @@ public class MiniGameManager : MonoBehaviour
     public List<Sprite> mioList;
 
     public int Score = 0;
+    public int RailCoin = 0;
 
     public float fiverScore = 0;
     public bool IsFiver;
