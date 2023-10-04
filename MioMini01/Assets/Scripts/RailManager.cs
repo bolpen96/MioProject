@@ -16,7 +16,10 @@ public class RailManager : MonoBehaviour
     public Image img_time;
     public GameObject scoreBoard;
 
+    string[] fiverEvent = {"food", "mio", "score", "rail" , "fiver"};
     public GameObject FiverMio;
+    public GameObject FiverMioHealth;
+
     bool fiverActS = false;
     bool fiverActE = false;
 
@@ -66,6 +69,7 @@ public class RailManager : MonoBehaviour
 
         startPos03 = rail03.transform.position;
         startPos03.x += 327;
+
 
         MiniGameManager.Instance.GameOver = true;
         alert_Gamestart.SetActive(true);
@@ -201,6 +205,7 @@ public class RailManager : MonoBehaviour
         StopCoroutine(OnRailAddBtn());
         isColorEvent = false;
         MiniGameManager.Instance.RailCoin--;
+        //btn_railAdd.GetComponent<Button>().interactable = false;
 
         if (lv == 0)
         {
@@ -249,6 +254,21 @@ public class RailManager : MonoBehaviour
 
         MiniGameManager.Instance.Score += 10;
         txt_Score.text = MiniGameManager.Instance.Score.ToString();
+
+        if(MiniGameManager.Instance.IsFiver)
+        {
+            if(FiverMioHealth.GetComponent<Image>().fillAmount - 0.1f <= 0)
+            {
+                MiniGameManager.Instance.IsFiver = false;
+                FiverEnd();
+                FiverClear();
+            }
+            else
+            {
+                FiverMioHealth.GetComponent<Image>().fillAmount -= 0.1f;
+            }
+            
+        }
     }
 
     //음식을 잘못먹였을 때 이벤트
@@ -280,7 +300,6 @@ public class RailManager : MonoBehaviour
         {
             Destroy(oneObject);
         }
-        FiverMio.SetActive(true);
 
         InvokeRepeating("MakeFood01", 0f, 0.5f);
         if (IsInvoking("MakeFood02"))
@@ -293,6 +312,10 @@ public class RailManager : MonoBehaviour
             CancelInvoke("MakeFood03");
             InvokeRepeating("MakeFood03", 0f, 0.5f);
         }
+
+        FiverMio.SetActive(true);
+
+
 
     }
 
@@ -464,4 +487,26 @@ public class RailManager : MonoBehaviour
         }
     }
 
+    void FiverClear()
+    {
+        int clearNum = UnityEngine.Random.Range(0, fiverEvent.Length);
+        string strEvent = fiverEvent[clearNum];
+        // {"food", "mio", "score", "rail" , "fiver"
+        if (strEvent == "food")
+        {
+
+        }else if(strEvent == "mio")
+        {
+
+        }else if(strEvent == "score")
+        {
+
+        }else if(strEvent == "rail")
+        { 
+
+        }else if(strEvent == "fiver")
+        {
+
+        }
+    }
 }
