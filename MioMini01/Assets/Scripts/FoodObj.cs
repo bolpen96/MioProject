@@ -79,7 +79,7 @@ public class FoodObj : MonoBehaviour
         }
         else if(MiniGameManager.Instance.IsFiver)
         {
-            obj.GetComponent<RailManager>().FiverScore();
+            obj.GetComponent<RailManager>().FiverClickEvent();
             Destroy(this.gameObject);
             return;
         }

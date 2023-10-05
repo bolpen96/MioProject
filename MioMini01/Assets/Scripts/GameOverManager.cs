@@ -22,7 +22,7 @@ public class GameOverManager : MonoBehaviour
     public bool isScoreCheck = false;
     bool isExtraExp = false;
 
-    int coinScore;
+    float coinScore;
     int playerCoin = 0;
     public bool coinCheck = false;
 
@@ -219,7 +219,7 @@ public class GameOverManager : MonoBehaviour
     {
         coinScore = MiniGameManager.Instance.Score / 10;
 
-        for (int i = GameManager.Instance.MinigameCoin; i <= (GameManager.Instance.MinigameCoin + coinScore); i++)
+        for (float i = GameManager.Instance.MinigameCoin; i <= (GameManager.Instance.MinigameCoin + coinScore); i++)
         {
             txt_money.text = i.ToString();
 

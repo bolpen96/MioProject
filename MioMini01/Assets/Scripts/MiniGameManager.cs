@@ -13,11 +13,14 @@ public class MiniGameManager : MonoBehaviour
     public Sprite[] LotMio;
     public List<Sprite> mioList;
 
-    public int Score = 0;
+    public float scoreValue;
+    public float Score = 0;
     public int RailCoin = 0;
 
+    public float fiverValue;
     public float fiverScore = 0;
     public bool IsFiver;
+    public float buffTime;
 
     public float isCorrect;
 

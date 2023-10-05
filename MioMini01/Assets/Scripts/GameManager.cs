@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public int Level;
     public float Exp;
     public float Score;
-    public int MinigameCoin;
+    public float MinigameCoin;
 
     public int State = 0;
 
@@ -31,6 +32,13 @@ public class GameManager : MonoBehaviour
     {
         Instance = this; //변수 초기화
         DontDestroyOnLoad(gameObject);
+    }
+    
+    public T[] RemoveAt<T>(ref T[] arr, int index)
+    {
+        var dest = new List<T>(arr);
+        dest.RemoveAt(index);
+        return dest.ToArray();
     }
 
     private void Start()
