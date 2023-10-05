@@ -56,14 +56,12 @@ public class RailManager : MonoBehaviour
 
 
     bool isColorEvent;
-    bool IscolorR;
-    bool IscolorG;
-    bool IscolorB;
     Color currentColor = Color.white;
 
     public Transform TR_buffZone;
     public GameObject Fiver_buff;
     public Sprite[] SP_buff;
+    int buffNum;
     private void Start()
     {
         startPos01 = rail01.transform.position;
@@ -78,7 +76,6 @@ public class RailManager : MonoBehaviour
         //fiverEvent.Add("food", "mio", "score", "rail", "fiver");
 
         fiverEvent = new string[] { "food", "mio", "score", "rail", "fiver" };
-        
         MiniGameManager.Instance.GameOver = true;
         alert_Gamestart.SetActive(true);
     }
@@ -287,13 +284,12 @@ public class RailManager : MonoBehaviour
         if (FiverMioHealth.GetComponent<Image>().fillAmount - 0.1f <= 0)
         {
             MiniGameManager.Instance.IsFiver = false;
-            FiverEnd();
             FiverClear();
         }
         else
         {
 
-            FiverMioHealth.GetComponent<Image>().fillAmount -= 0.1f;
+            FiverMioHealth.GetComponent<Image>().fillAmount -= 1f;
         }
     }
     public void FiverTime()
@@ -331,24 +327,31 @@ public class RailManager : MonoBehaviour
     //피버가 끝날 때
     void FiverEnd()
     {
-        CancelInvoke("MakeFood01");
-        
-        InvokeRepeating("MakeFood01", 0f, 2f);
-
-        if (IsInvoking("MakeFood02"))
+        if (!MiniGameManager.Instance.foodBuffOn)
         {
-            CancelInvoke("MakeFood02");
-            InvokeRepeating("MakeFood02", 0f, 2f);
-        }
-        if (IsInvoking("MakeFood03"))
-        {
-            CancelInvoke("MakeFood03");
-            InvokeRepeating("MakeFood03", 0f, 2f);
+            CancelInvoke("MakeFood01");
+
+            InvokeRepeating("MakeFood01", 0f, 2f);
+
+            if (IsInvoking("MakeFood02"))
+            {
+                CancelInvoke("MakeFood02");
+                InvokeRepeating("MakeFood02", 0f, 2f);
+            }
+            if (IsInvoking("MakeFood03"))
+            {
+                CancelInvoke("MakeFood03");
+                InvokeRepeating("MakeFood03", 0f, 2f);
+            }
         }
 
-        InvokeRepeating("MakeMio", 0f, 2f);
+        if (!MiniGameManager.Instance.mioBuffOn)
+        {
+            InvokeRepeating("MakeMio", 0f, 2f);
+        }
 
         FiverMio.SetActive(false);
+        FiverMioHealth.GetComponent<Image>().fillAmount = 1;
         fiverBar.fillAmount = 0;
         MiniGameManager.Instance.fiverScore = 0;
         MiniGameManager.Instance.IsFiver = false;
@@ -499,7 +502,6 @@ public class RailManager : MonoBehaviour
     void FiverClear()
     {
         int clearNum = UnityEngine.Random.Range(0, fiverEvent.Length);
-
         string strEvent;
 
         if (currentFEvent == null)
@@ -510,8 +512,47 @@ public class RailManager : MonoBehaviour
             strEvent = currentFEvent[clearNum];
         }
 
-        // {"food", "mio", "score", "rail" , "fiver"
+        // "food", "mio", "score", "rail" , "fiver"
         if (strEvent == "food")
+        {
+            MiniGameManager.Instance.foodBuffOn = true;
+            foodBuff();
+            buffNum = 0;
+        }
+        else if(strEvent == "mio")
+        {
+            MiniGameManager.Instance.mioBuffOn = true;
+            mioBuff();
+            buffNum = 1;
+        }
+        else if(strEvent == "score")
+        {
+            MiniGameManager.Instance.scoreBuffOn = true;
+            scoreBuff();
+            buffNum = 2;
+        }
+        else if(strEvent == "fiver")
+        {
+            MiniGameManager.Instance.fiverBuffOn = true;
+            fiverBuff();
+            buffNum = 3;
+        }
+        else if (strEvent == "rail")
+        {
+            MiniGameManager.Instance.RailCoin++;
+        }
+        Fiver_buff.transform.GetChild(0).GetComponent<Image>().sprite = SP_buff[buffNum];
+        Instantiate(Fiver_buff, TR_buffZone);
+        
+        Debug.Log(strEvent + "exit");
+        currentFEvent = GameManager.Instance.RemoveAt(ref fiverEvent, clearNum);
+
+        FiverEnd();
+    }
+
+    public void foodBuff()
+    {
+        if (MiniGameManager.Instance.foodBuffOn)
         {
             CancelInvoke("MakeFood01");
 
@@ -527,31 +568,61 @@ public class RailManager : MonoBehaviour
                 CancelInvoke("MakeFood03");
                 InvokeRepeating("MakeFood03", 0f, 1f);
             }
-
         }
-        else if(strEvent == "mio")
+        else
+        {
+            CancelInvoke("MakeFood01");
+
+            InvokeRepeating("MakeFood01", 0f, 2f);
+
+            if (IsInvoking("MakeFood02"))
+            {
+                CancelInvoke("MakeFood02");
+                InvokeRepeating("MakeFood02", 0f, 2f);
+            }
+            if (IsInvoking("MakeFood03"))
+            {
+                CancelInvoke("MakeFood03");
+                InvokeRepeating("MakeFood03", 0f, 2f);
+            }
+        }
+    }
+
+    public void mioBuff()
+    {
+        if (MiniGameManager.Instance.mioBuffOn)
         {
             CancelInvoke("MakeMio");
             InvokeRepeating("MakeMio", 0f, 1f);
         }
-        else if(strEvent == "score")
+        else
+        {
+            CancelInvoke("MakeMio");
+            InvokeRepeating("MakeMio", 0f, 2f);
+        }
+    }
+
+    public void scoreBuff()
+    {
+        if (MiniGameManager.Instance.scoreBuffOn)
         {
             MiniGameManager.Instance.scoreValue = MiniGameManager.Instance.scoreValue * 2f;
         }
-        else if(strEvent == "rail")
+        else
         {
-            MiniGameManager.Instance.RailCoin++;
+            MiniGameManager.Instance.scoreValue = MiniGameManager.Instance.scoreValue / 2f;
         }
-        else if(strEvent == "fiver")
+    }
+
+    public void fiverBuff()
+    {
+        if (MiniGameManager.Instance.fiverBuffOn)
         {
             MiniGameManager.Instance.fiverValue *= 2f;
         }
-
-        int buff_num = Array.IndexOf(SP_buff, strEvent);
-        Instantiate(Fiver_buff, TR_buffZone);
-        Fiver_buff.transform.GetChild(0).GetComponent<Image>().sprite = SP_buff[buff_num];
-        Debug.Log(strEvent + "exit");
-        currentFEvent = GameManager.Instance.RemoveAt(ref fiverEvent, clearNum);
-        
+        else
+        {
+            MiniGameManager.Instance.fiverValue = MiniGameManager.Instance.fiverValue / 2f;
+        }
     }
 }

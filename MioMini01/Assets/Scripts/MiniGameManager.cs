@@ -21,6 +21,12 @@ public class MiniGameManager : MonoBehaviour
     public float fiverScore = 0;
     public bool IsFiver;
     public float buffTime;
+    public bool foodBuffOn;
+    public bool mioBuffOn;
+    public bool scoreBuffOn;
+    public bool fiverBuffOn;
+
+
 
     public float isCorrect;
 

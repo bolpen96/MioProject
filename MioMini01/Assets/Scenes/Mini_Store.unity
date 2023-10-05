@@ -5249,10 +5249,10 @@ MonoBehaviour:
   TR_buffZone: {fileID: 330850533}
   Fiver_buff: {fileID: 8151525380463318816, guid: 8aaf319ede097e2489330b2e4842d5c0, type: 3}
   SP_buff:
-  - {fileID: 21300000, guid: bb1ea1ef84c3a074785101478da57210, type: 2}
   - {fileID: 21300000, guid: e64c876ce13b50c4db478ebc294cf876, type: 3}
   - {fileID: 21300000, guid: 012cfa50d8b1264459acb2867cfc5580, type: 3}
   - {fileID: 21300000, guid: 3605d33ba2a31fc4f97d4a16fd08b5fd, type: 2}
+  - {fileID: 21300000, guid: bb1ea1ef84c3a074785101478da57210, type: 2}
 --- !u!114 &1646064771
 MonoBehaviour:
   m_ObjectHideFlags: 0
