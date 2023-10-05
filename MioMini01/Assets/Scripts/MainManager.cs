@@ -27,12 +27,11 @@ public class MainManager : MonoBehaviour
     public Image[] cleans;
     public float cleanValue;
     Image Img_clean;
-    string str_clean;
     bool isCleanck = false;
 
     public bool isPlaying;
     public float PlayingTime;
-    public int result_zone;
+    public int Play_result;
 
     public TextMeshProUGUI txt_TokenValue;
     public TextMeshProUGUI txt_tokenTime;
@@ -86,7 +85,7 @@ public class MainManager : MonoBehaviour
 
             Img_food.fillAmount = 1;
             Img_upfood = foods[Convert.ToInt32(str_food)];
-            Img_upfood.fillAmount += 0.05f;
+            Img_upfood.fillAmount += foodScore;
 
             isFoodck = false;
         }
@@ -111,7 +110,7 @@ public class MainManager : MonoBehaviour
 
         if (GameManager.Instance.Tokken != GameManager.Instance.MaxTokken)
         {
-            tokenTime.gameObject.SetActive(false);
+            tokenTime.gameObject.SetActive(true);
             GameManager.Instance.tokkenTime -= Time.deltaTime;
 
             if (GameManager.Instance.tokkenTime < 0)
@@ -190,12 +189,12 @@ public class MainManager : MonoBehaviour
         yield return null;
     }
 
-    //놀아주기 결과 값 적용
+    //놀아주기 결과 값 적용 perfact:1 good:0 fail:-1
     public IEnumerator CkPlayingScore()
     {
-        Debug.Log(result_zone);
+        Debug.Log(Play_result);
 
-        if(result_zone == 1)
+        if(Play_result == 1)
         {
             cleanValue = GameManager.Instance.cleanMaxValue;
             for (int i = 0; i < (int)cleanValue; i++)
@@ -205,7 +204,7 @@ public class MainManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        else if(result_zone == 0)
+        else if(Play_result == 0)
         {
             str_food = Regex.Replace(Img_clean.ToString(), @"[^0-9]", "");
 

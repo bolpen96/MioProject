@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
@@ -14,9 +15,13 @@ public class PlayWithMio : MonoBehaviour
     public Scrollbar scrBar;
     public Transform tr_scrBar;
     public Image Img_zone;
-    bool isPlaycool;
     public VideoPlayer Vp;
     public VideoClip[] clip;
+
+    public GameObject alertView;
+    public Image alert_Img;
+    public TextMeshProUGUI alert_txt;
+    public Sprite[] resultSprite;
 
     private void Update()
     {
@@ -66,6 +71,7 @@ public class PlayWithMio : MonoBehaviour
 
         Destroy(createZone,3f);
         Vp.Stop();
+        StartCoroutine(alert_resultEvent());
         MainManager.instance.isPlaying = false;
         PlayingView.SetActive(false);
         yield return null;
@@ -95,5 +101,35 @@ public class PlayWithMio : MonoBehaviour
         Vp.clip = clip[ranNum];
 
         Vp.Play();
+    }
+
+    IEnumerator alert_resultEvent()
+    {
+        alertView.GetComponent<CanvasGroup>().alpha = 1;
+        alertView.SetActive(true);
+
+        if (MainManager.instance.Play_result == 1)
+        {
+            alert_Img.sprite = resultSprite[0];
+            alert_txt.text = "PERFACT!!";
+        }
+        else if(MainManager.instance.Play_result == 0)
+        {
+            alert_Img.sprite = resultSprite[1];
+            alert_txt.text = "GOOD!";
+        }
+        else if(MainManager.instance.Play_result == -1)
+        {
+            alert_Img.sprite = resultSprite[2];
+            alert_txt.text = "FAIL";
+        }
+
+        while(alertView.GetComponent<CanvasGroup>().alpha <= 0)
+        {
+            alertView.GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 0.3f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        alertView.SetActive(false);
     }
 }

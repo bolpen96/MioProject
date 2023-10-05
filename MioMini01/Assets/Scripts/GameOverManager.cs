@@ -44,10 +44,6 @@ public class GameOverManager : MonoBehaviour
 
 
     //bottom view
-    Button btn_quit;
-    Button btn_restart;
-    public TextMeshProUGUI txt_token;
-    Button btn_token;
 
 
     public void GameOver()

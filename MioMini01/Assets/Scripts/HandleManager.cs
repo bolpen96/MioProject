@@ -10,15 +10,15 @@ public class HandleManager : MonoBehaviour
         {
             if(collision.gameObject.name == "Img_perfact")
             {
-                MainManager.instance.result_zone = 1;
+                MainManager.instance.Play_result = 1;
             }
             else if(collision.gameObject.name == "Img_good")
             {
-                MainManager.instance.result_zone = 0;
+                MainManager.instance.Play_result = 0;
             }
             else
             {
-                MainManager.instance.result_zone = -1;
+                MainManager.instance.Play_result = -1;
             }
             Debug.Log(collision.gameObject.name);
 

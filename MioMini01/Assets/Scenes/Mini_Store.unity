@@ -5323,12 +5323,16 @@ MonoBehaviour:
   scoreValue: 10
   Score: 0
   RailCoin: 0
-  fiverValue: 10
+  fiverValue: 0.3
   fiverScore: 0
   IsFiver: 0
   buffTime: 0
+  foodBuffOn: 0
+  mioBuffOn: 0
+  scoreBuffOn: 0
+  fiverBuffOn: 0
   isCorrect: 0
-  PlayTime: 60
+  PlayTime: 5
   GameOver: 0
 --- !u!114 &1646064774
 MonoBehaviour:
@@ -5352,7 +5356,6 @@ MonoBehaviour:
   img_mio: {fileID: 169544935}
   txt_mio: {fileID: 1736556372}
   txt_score: {fileID: 45532798}
-  txt_token: {fileID: 265559036}
 --- !u!1 &1714089185
 GameObject:
   m_ObjectHideFlags: 0

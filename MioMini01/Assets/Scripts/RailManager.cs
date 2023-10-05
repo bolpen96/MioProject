@@ -183,7 +183,6 @@ public class RailManager : MonoBehaviour
             
 
         }
-
         MainManager.instance.showTokenTxt(txt_tkValue, txt_tkTime);
 
         //스코어 보드의 터치를 통한 빠른 상호작용
