@@ -30,7 +30,7 @@ public class Adventure : MonoBehaviour
 
     private void Start()
     {
-        storyNum = Random.Range(0,10);
+        
     }
 
 
