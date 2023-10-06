@@ -23,11 +23,13 @@ public class MainManager : MonoBehaviour
     string str_food;
     bool isFoodck = false;
     public float foodScore;
+    
 
     public Image[] cleans;
     public float cleanValue;
     Image Img_clean;
     bool isCleanck = false;
+    bool isCleanEvent;
 
     public bool isPlaying;
     public float PlayingTime;
@@ -50,8 +52,10 @@ public class MainManager : MonoBehaviour
     private void Update()
     {
         //배고픔 줄어드는 이벤트
-        StartCoroutine(lessHgy());
-
+        if(!isCleanEvent)
+        {
+            StartCoroutine(lessHgy());
+        }
         //청결도 줄어드는 이벤트
         StartCoroutine(lessClean());
 
@@ -153,7 +157,6 @@ public class MainManager : MonoBehaviour
             }
 
         }
-
         yield return null;
     }
 
@@ -177,7 +180,7 @@ public class MainManager : MonoBehaviour
             if (Img_clean.fillAmount > 0)
             {
                 //1개당 20초
-                Img_clean.fillAmount -= Time.deltaTime * 0.05f;
+                Img_clean.fillAmount -= Time.deltaTime * 0.5f;
             }
             else
             {
@@ -192,7 +195,7 @@ public class MainManager : MonoBehaviour
     //놀아주기 결과 값 적용 perfact:1 good:0 fail:-1
     public IEnumerator CkPlayingScore()
     {
-        Debug.Log(Play_result);
+        isCleanEvent = true;
 
         if(Play_result == 1)
         {
@@ -200,21 +203,23 @@ public class MainManager : MonoBehaviour
             for (int i = 0; i < (int)cleanValue; i++)
             {
                 cleans[i].fillAmount = 1;
-                cleanValue--;
                 yield return new WaitForSeconds(0.1f);
             }
         }
         else if(Play_result == 0)
         {
             str_food = Regex.Replace(Img_clean.ToString(), @"[^0-9]", "");
-
+            Debug.Log(str_food);
             for(int i = 0; i < Convert.ToInt32(str_food)+2; i++)
             {
                 cleans[i].fillAmount = 1;
                 yield return new WaitForSeconds(0.1f);
             }
-            isCleanck = false;
         }
+
+        isCleanEvent = false;
+        isCleanck = false;
+
 
         yield return null;
     }

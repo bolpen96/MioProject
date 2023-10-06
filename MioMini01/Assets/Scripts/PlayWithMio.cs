@@ -68,9 +68,9 @@ public class PlayWithMio : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-
         Destroy(createZone,3f);
         Vp.Stop();
+        StartCoroutine(MainManager.instance.CkPlayingScore());
         StartCoroutine(alert_resultEvent());
         MainManager.instance.isPlaying = false;
         PlayingView.SetActive(false);
@@ -105,6 +105,7 @@ public class PlayWithMio : MonoBehaviour
 
     IEnumerator alert_resultEvent()
     {
+        Debug.Log("alert \n" + MainManager.instance.Play_result);
         alertView.GetComponent<CanvasGroup>().alpha = 1;
         alertView.SetActive(true);
 
@@ -124,12 +125,14 @@ public class PlayWithMio : MonoBehaviour
             alert_txt.text = "FAIL";
         }
 
-        while(alertView.GetComponent<CanvasGroup>().alpha <= 0)
+        while(alertView.GetComponent<CanvasGroup>().alpha > 0)
         {
-            alertView.GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 0.3f;
+            alertView.GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 0.4f;
             yield return new WaitForSeconds(0.01f);
         }
 
         alertView.SetActive(false);
+
+        yield return null;
     }
 }

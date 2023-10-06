@@ -6,7 +6,8 @@ public class HandleManager : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (MainManager.instance.PlayingTime <= 0)
+        
+        if (MainManager.instance.isPlaying)
         {
             if(collision.gameObject.name == "Img_perfact")
             {
@@ -20,11 +21,8 @@ public class HandleManager : MonoBehaviour
             {
                 MainManager.instance.Play_result = -1;
             }
-            Debug.Log(collision.gameObject.name);
-
-
-            StartCoroutine(MainManager.instance.CkPlayingScore());
         }
+        
         
     }
 }
