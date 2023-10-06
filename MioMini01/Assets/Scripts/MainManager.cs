@@ -52,13 +52,14 @@ public class MainManager : MonoBehaviour
     private void Update()
     {
         //배고픔 줄어드는 이벤트
-        if(!isCleanEvent)
-        {
+        { 
             StartCoroutine(lessHgy());
         }
         //청결도 줄어드는 이벤트
-        StartCoroutine(lessClean());
-
+        if (!isCleanEvent)
+        {
+            StartCoroutine(lessClean());
+        }
         //text UI 관련
         showTokenTxt(txt_TokenValue, txt_tokenTime);
 
@@ -219,7 +220,6 @@ public class MainManager : MonoBehaviour
 
         isCleanEvent = false;
         isCleanck = false;
-
 
         yield return null;
     }
