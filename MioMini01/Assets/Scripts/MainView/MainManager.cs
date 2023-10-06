@@ -140,6 +140,7 @@ public class MainManager : MonoBehaviour
                 {
                     Img_food = foods[i];
                     isFoodck = true;
+                    GameManager.Instance.currentFoodValue = foods.Length - 1;
                     break;
                 }
                 yield return new WaitForSeconds(0.01f);
@@ -151,6 +152,7 @@ public class MainManager : MonoBehaviour
             {
                 //1개당 10초
                 Img_food.fillAmount -= Time.deltaTime * 0.1f;
+                GameManager.Instance.currentFoodValueDt = Img_food.fillAmount;
             }
             else
             {
@@ -171,8 +173,10 @@ public class MainManager : MonoBehaviour
                 {
                     Img_clean = cleans[i];
                     isCleanck = true;
+                    GameManager.Instance.currentCleanValue = cleans.Length - 1;
                     break;
                 }
+                
                 yield return new WaitForSeconds(0.01f);
             }
         }
@@ -182,6 +186,7 @@ public class MainManager : MonoBehaviour
             {
                 //1개당 20초
                 Img_clean.fillAmount -= Time.deltaTime * 0.5f;
+                GameManager.Instance.currentCleanValueDt = Img_clean.fillAmount;
             }
             else
             {

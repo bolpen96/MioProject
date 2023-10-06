@@ -26,7 +26,12 @@ public class GameManager : MonoBehaviour
     public float maxTokkenTime = 300;
 
     public int foodMaxValue;
+    public int currentFoodValue;
+    public float currentFoodValueDt;
+
     public int cleanMaxValue;
+    public int currentCleanValue;
+    public float currentCleanValueDt;
 
     private void Awake()
     {
