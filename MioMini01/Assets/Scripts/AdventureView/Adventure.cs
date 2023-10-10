@@ -7,11 +7,19 @@ using UnityEngine.UI;
 public class Adventure : MonoBehaviour
 {
     public static Adventure instance;
-    public Image[] mioSprite;
+    public Image Img_topView;
+
+    public Sprite[] mioSprite;
     public GameObject mioTalk;
 
-    public Image[] bgSprite;
+    /*
+    0 : º±≈√¡ˆ
+    1 : 
+     */
+    public Sprite[] bgSprite;
     public TextMeshProUGUI txt_explane;
+    public float currentType;
+
 
     public GameObject obj_chooseView;
     public GameObject obj_choose;
@@ -30,7 +38,7 @@ public class Adventure : MonoBehaviour
 
     private void Start()
     {
-        
+        this.GetComponent<StoryManager>().SelectWay(Img_topView, txt_explane, obj_choose, obj_chooseView.transform);
     }
 
 
