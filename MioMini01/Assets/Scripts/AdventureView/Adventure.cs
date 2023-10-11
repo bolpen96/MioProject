@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Adventure : MonoBehaviour
@@ -11,7 +12,8 @@ public class Adventure : MonoBehaviour
 
     public Sprite[] mioSprite;
     public GameObject mioTalk;
-
+    public float mioHeath;
+    public Image Img_mioHeath;
     /*
     0 : º±≈√¡ˆ
     1 : 
@@ -38,8 +40,27 @@ public class Adventure : MonoBehaviour
 
     private void Start()
     {
-        this.GetComponent<StoryManager>().SelectWay(Img_topView, txt_explane, obj_choose, obj_chooseView.transform);
+        mioHeath = 1;
     }
 
+    public IEnumerator mioHeathBar(float num)
+    {
+        float smooth;
+        mioHeath += num;
+
+        while (Img_mioHeath.fillAmount > mioHeath)
+        {
+            smooth = Mathf.Lerp(Img_mioHeath.fillAmount, mioHeath, Time.deltaTime * 10f);
+            Img_mioHeath.fillAmount = smooth;
+            yield return new WaitForSeconds(0.01f);
+        }
+        
+    }
+
+    public void ExitAdventure()
+    {
+        GameManager.Instance.State = 3;
+        SceneManager.LoadScene(1);
+    }
 
 }

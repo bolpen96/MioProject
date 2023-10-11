@@ -228,4 +228,11 @@ public class MainManager : MonoBehaviour
 
         yield return null;
     }
+
+    public void onAdventure()
+    {
+        GameManager.Instance.State = 4;
+        SceneManager.LoadScene(1);
+    }
+    
 }

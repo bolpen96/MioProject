@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Android.Types;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,9 @@ public class StoryManager : MonoBehaviour
 
     int jungleHeart = 10;
     float lakeHeart = 50;
+    float tornadoHeart = 10;
+    float chestHeart = 10;
+    float creatureHeart = 30;
 
     float talkSpeed = 0.1f;
 
@@ -69,7 +73,7 @@ public class StoryManager : MonoBehaviour
             {"느낌이 나는 곳으로 간다","다른데로 간다",null },    //8,9,10
             {"구경한다","다른데로 간다",null },                   //11
             {"열어본다","그냥 다른데로 간다",null },              //12
-            {"한대 톡 쳐본다","말을 걸어본다","다른데로 간다"}    //13
+            {"건드려본다","말을 걸어본다","다른데로 간다"}        //13
         };
 
         result_story = new string[]
@@ -79,27 +83,32 @@ public class StoryManager : MonoBehaviour
             "안전하게 건너왔어요",                                     //4
             "열매들을 매우 맛있게 먹었어요",                           //5
             "신기한 기운이 우리를 덮었고 \n 몸을 깨끗게 해주었어요",   //6
-            "토네이도에서 날라온 물건에 의해 다쳤어요",                //11
-            "토네이도에서 날라온 물건을 주웠어요",                     //11
+            "토네이도에서 날라온\n 물건에 의해 다쳤어요",                //11
+            "토네이도에서 날라온\n 물건을 주웠어요",                     //11
             "각종 아이템이 들어있었어요",                              //12
             "비어있는 상자에요",                                       //12
-            "상자에서 벌래들이 튀어나왔어요",                          //12
-            "엄청 큰 생물체가 우리를 공격했어요",                      //13
+            "상자에서 벌래들이\n 튀어나왔어요",                          //12
+            "엄청 큰 생물체가\n 우리를 공격했어요",                      //13
             "아무 반응도 하지 않네요",                                 //13
             "무언가를 건내주었어요"                                    //13
         };
 
         result_effect = new string[,]
         {
-            { "탱글탱글해보이는 먹이", "물에 부풀려있는 먹이"},      //1
-            { "노릇노릇 구워진 먹이","타버린 먹이" },                //2
-            { "신선해보이는 먹이", "얼어있는 먹이"},                 //3
-            {"의 배고픔이 해결되었어요","" },                          //5
-            {"의 체력이 회복하였어요","" },                            //6
-            {"을(를) 획득하였어요" , ""},                                  //
-            {"와 ","를 획득하였어요" },                                //
-            {"체력이 "," 감소하였어요" },                              //
+            { "탱글탱글해보이는\n 먹이", "물에 부풀려있는\n 먹이"},    //1
+            { "노릇노릇 구워진\n 먹이","타버린 먹이" },                  //2
+            { "신선해보이는 \n 먹이", "얼어있는 먹이"},                //3
+            {"의 배고픔이\n 해결되었어요","" },                          //5
+            {"의 체력이\n 회복하였어요","" },                            //6
+            {"을(를)\n 획득하였어요" , ""},                              //
+            {"와 ","를\n획득하였어요" },                                //
+            {"체력이 ","\n감소하였어요" },                              //
         };
+
+
+
+
+        SelectWay();
     }
 
     public void SelectWay()
@@ -107,14 +116,17 @@ public class StoryManager : MonoBehaviour
         Adventure.instance.Img_topView.sprite = Adventure.instance.bgSprite[0];
         Adventure.instance.txt_explane.text = "어느방향으로 갈까요?";
 
-        objO = Instantiate(Adventure.instance.obj_choose, Adventure.instance.Img_topView.transform);
+        objO = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
         objO.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "동쪽으로";
-        objS = Instantiate(Adventure.instance.obj_choose, Adventure.instance.Img_topView.transform);
+        objS = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
         objS.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "서쪽으로";
-        objT = Instantiate(Adventure.instance.obj_choose, Adventure.instance.Img_topView.transform);
+        objT = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
         objT.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "남쪽으로";
-        objF = Instantiate(Adventure.instance.obj_choose, Adventure.instance.Img_topView.transform);
+        objF = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
         objF.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "북쪽으로";
+
+        Adventure.instance.obj_resultView.SetActive(false);
+        ranNum = Random.Range(0, str_story.Length - 1);
         Adventure.instance.currentType = 1;
     }
 
@@ -128,8 +140,6 @@ public class StoryManager : MonoBehaviour
         //최초 방향 선택
         if (Adventure.instance.currentType == 1)
         {
-            ranNum = Random.Range(0, str_story.Length-1);
-
             Adventure.instance.txt_explane.text = str_story[ranNum];
 
             if (ranNum == 0)
@@ -206,18 +216,22 @@ public class StoryManager : MonoBehaviour
         //결과 설명 문장
         else if(Adventure.instance.currentType == 2)
         {
-            if(ranNum < 4)
+            Debug.Log(ranNum);
+
+            if (ranNum < 4)
             {
                 if(ranNum == 0)
                 {
-                    ranNum = ckNum;
+                    ranNum = ckNum + 1;
                     Adventure.instance.currentType = 1;
-                    SelectWay();
+                    ChooseOne();
+                    return;
                 }
                 else if(ckNum == 0)
                 {
                     Adventure.instance.currentType = 1;
                     SelectWay();
+                    return;
                 }
                 else if(ranNum == 1)
                 {
@@ -246,6 +260,7 @@ public class StoryManager : MonoBehaviour
                 {
                     Adventure.instance.currentType = 1;
                     SelectWay();
+                    return;
                 }
 
                 resultRanNum = Random.Range(1, 2);
@@ -253,6 +268,7 @@ public class StoryManager : MonoBehaviour
                 if(resultRanNum == 1)
                 {
                     Adventure.instance.txt_resultEffect.text = result_effect[7,0] + jungleHeart + result_effect[7,1];
+                    StartCoroutine(Adventure.instance.mioHeathBar(-jungleHeart));
                 }
             }
             else if(ranNum == 5) 
@@ -264,59 +280,113 @@ public class StoryManager : MonoBehaviour
             {
                 Adventure.instance.txt_resultExplane.text = result_story[4];
                 Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
-            }
-            else if(ranNum < 11)
-            {
-                if (ckNum == 0)
-                {
-                    Adventure.instance.currentType = 1;
-                    SelectWay();
-                }
+                StartCoroutine(Adventure.instance.mioHeathBar(lakeHeart));
             }
             else if(ranNum == 7)
             {
-                
-                objO = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
-                objO.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str_choose[1, 0];
-                objS = Instantiate(Adventure.instance.obj_choose, Adventure.instance.obj_chooseView.transform);
-                objS.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str_choose[1, 1];
-                
-
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                Adventure.instance.currentType = 1;
+                ranNum = 11;
+                ChooseOne();
+                return;
             }
             else if(ranNum == 8)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                Adventure.instance.currentType = 1;
+                ranNum = 1;
+                ChooseOne();
+                return;
             }
             else if (ranNum == 9)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                Adventure.instance.currentType = 1;
+                ranNum = 2;
+                ChooseOne();
+                return;
             }
             else if (ranNum == 10)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                Adventure.instance.currentType = 1;
+                ranNum = 3;
+                ChooseOne();
+                return;
             }
-            else if (ranNum == 8)
+            else if (ranNum == 11)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                if(ckNum == 0)
+                {
+                    resultRanNum = Random.Range(5, 6);
+                    Adventure.instance.txt_resultExplane.text = result_story[resultRanNum];
+                    Adventure.instance.txt_resultEffect.text = result_effect[7, 0] + tornadoHeart + result_effect[7, 1];
+                    StartCoroutine(Adventure.instance.mioHeathBar(-tornadoHeart));
+                }
+                else
+                {
+                    Debug.Log("수정요망");
+                }
+
+                
             }
-            else if (ranNum == 8)
+            else if (ranNum == 12)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                if(ckNum == 0)
+                {
+                    resultRanNum = Random.Range(7, 9);
+                    Adventure.instance.txt_resultExplane.text = result_story[resultRanNum];
+
+                    if (resultRanNum == 7)
+                    {
+                        int ranNum = Random.Range(5, 6); // 수정 - 추후 확률 및 아이템 조정 
+
+                        if (ranNum == 5)
+                        {
+                            Adventure.instance.txt_resultEffect.text = result_effect[ranNum, 0];
+                        }
+                        else if (ranNum == 6)
+                        {
+                            Adventure.instance.txt_resultEffect.text = "먹이" + result_effect[ranNum, 0] +
+                                                                        "아이템" + result_effect[ranNum, 1];
+                        }
+                    }
+                    else if(resultRanNum == 9)
+                    {
+                        Adventure.instance.txt_resultEffect.text = result_effect[7, 0] + chestHeart + result_effect[7, 1];
+                        StartCoroutine(Adventure.instance.mioHeathBar(-chestHeart));
+                    }
+                }
             }
-            else if (ranNum == 8)
+            else if (ranNum == 13)
             {
-                Adventure.instance.txt_resultExplane.text = result_story[4];
-                Adventure.instance.txt_resultEffect.text = lakeHeart + result_effect[4, 0];
+                if(ckNum == 1 || ckNum == 2) //수정 - 확률 및 시스템
+                {
+                    int ranNum = Random.Range(0, 2);
+                    if(ranNum == 0)
+                    {
+                        Adventure.instance.txt_resultExplane.text = result_story[10];
+                        Adventure.instance.txt_resultEffect.text = result_effect[7, 0] + creatureHeart + result_effect[7, 1];
+                        StartCoroutine(Adventure.instance.mioHeathBar(-creatureHeart));
+                    }
+                    else if(ranNum == 1)
+                    {
+                        Adventure.instance.txt_resultExplane.text = result_story[11];
+                    }
+                    else if(ranNum == 2)
+                    {
+                        Adventure.instance.txt_resultExplane.text = result_story[12];
+                        Adventure.instance.txt_resultEffect.text = "알"+ result_effect[5, 0];
+                    }
+                }
+                else
+                {
+                    Debug.Log("수정요망");
+                }
             }
 
+            Adventure.instance.obj_resultView.SetActive(true);
             Adventure.instance.currentType = 3;
+        }
+        else if(Adventure.instance.currentType == 3)
+        {
+            Debug.Log("수정요망");
         }
         
         //체력이 다 소모되었을 때
