@@ -31,7 +31,7 @@ public class Adventure : MonoBehaviour
     public TextMeshProUGUI txt_resultEffect;
 
     public int storyNum;
-    
+    public float storyScore;
 
     private void Awake()
     {
@@ -40,13 +40,16 @@ public class Adventure : MonoBehaviour
 
     private void Start()
     {
-        mioHeath = 1;
+        mioHeath = 1;               //미오 최대체력 설정
+        storyScore = 10;            //스토리 진행 체력 설정
     }
 
     public IEnumerator mioHeathBar(float num)
     {
         float smooth;
-        mioHeath += num;
+        mioHeath += num/100;
+
+        Debug.Log(Img_mioHeath.fillAmount + " ||" + mioHeath);
 
         while (Img_mioHeath.fillAmount > mioHeath)
         {
@@ -54,7 +57,6 @@ public class Adventure : MonoBehaviour
             Img_mioHeath.fillAmount = smooth;
             yield return new WaitForSeconds(0.01f);
         }
-        
     }
 
     public void ExitAdventure()
