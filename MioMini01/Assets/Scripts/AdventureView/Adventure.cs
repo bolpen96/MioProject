@@ -9,6 +9,7 @@ public class Adventure : MonoBehaviour
 {
     public static Adventure instance;
     public Image Img_topView;
+    public GameObject obj_bottomView;
 
     public Sprite[] mioSprite;
     public GameObject mioTalk;
@@ -22,13 +23,14 @@ public class Adventure : MonoBehaviour
     public TextMeshProUGUI txt_explane;
     public float currentType;
 
-
     public GameObject obj_chooseView;
     public GameObject obj_choose;
     
     public GameObject obj_resultView;
     public TextMeshProUGUI txt_resultExplane;
     public TextMeshProUGUI txt_resultEffect;
+
+    public GameObject gameoverView;
 
     public int storyNum;
     public float storyScore;
@@ -42,6 +44,7 @@ public class Adventure : MonoBehaviour
     {
         mioHeath = 1;               //미오 최대체력 설정
         storyScore = 10;            //스토리 진행 체력 설정
+        gameoverView.SetActive(false);
     }
 
     public IEnumerator mioHeathBar(float num)
@@ -55,6 +58,32 @@ public class Adventure : MonoBehaviour
         {
             smooth = Mathf.Lerp(Img_mioHeath.fillAmount, mioHeath, Time.deltaTime * 10f);
             Img_mioHeath.fillAmount = smooth;
+
+            if(Img_mioHeath.fillAmount < 0)
+            {
+                gameoverView.SetActive(true);
+                break;
+            }
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    public void watchAdd()
+    {
+        StartCoroutine(mioHeathUp(50));
+        gameoverView.SetActive(false);
+    }
+
+    IEnumerator mioHeathUp(float num)
+    {
+        float smooth;
+        mioHeath += num / 100;
+        while (Img_mioHeath.fillAmount < mioHeath)
+        {
+            smooth = Mathf.Lerp(Img_mioHeath.fillAmount, mioHeath, Time.deltaTime * 10f);
+            Img_mioHeath.fillAmount = smooth;
+
             yield return new WaitForSeconds(0.01f);
         }
     }

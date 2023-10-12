@@ -17,7 +17,8 @@ public class StoryManager : MonoBehaviour
     string[,] str_choose;
     string[] result_story;
     string[,] result_effect;
-    string[] str_talk;
+
+    string[,] str_talk;
 
     GameObject objO;
     GameObject objS;
@@ -106,9 +107,22 @@ public class StoryManager : MonoBehaviour
             {"체력이 ","\n감소하였어요" },                             //
         };
 
-        str_talk = new string[]
+        str_talk = new string[,]
         {
-
+            { "어디로 갈꺼야??", "웅?"},
+            { "물이다 물\n첨벙첨벙","놀자!\n가즈아~" },
+            { "덥다리..","나 너무 더워\n 빼액" },
+            { "춥다리..","나 너무 추워\n 빼액" },
+            { "호달달..","가..갈꺼야?" },
+            { "허걱 맛있겠따", "꼬르륵.." },
+            { "오와앙 저게 뭐지?", "호에엥" },
+            { "시원시원~", "앞에 뭐가 있나?" },
+            { "", "뭘바!" },
+            { "포근하다", "흐아암~ 졸려" },
+            { "약간 추..춥다","호달달.."},
+            { "호에엥~~", "도망챠~" },
+            { "두근두근", "당장 열어~!!" },
+            { "누규세요?", "....딸꾹"}
         };
 
 
@@ -131,7 +145,7 @@ public class StoryManager : MonoBehaviour
 
         saveNum = false;
         Adventure.instance.obj_resultView.SetActive(false);
-        ranNum = Random.Range(0, str_story.Length - 1);
+        ranNum = Random.Range(0, str_story.Length);
         Adventure.instance.currentType = 1;
     }
 
@@ -141,8 +155,7 @@ public class StoryManager : MonoBehaviour
         Destroy(objS);
         Destroy(objT);
         Destroy(objF);
-        StartCoroutine(Adventure.instance.mioHeathBar(Adventure.instance.storyScore));
-
+        
         //최초 방향 선택
         if (Adventure.instance.currentType == 1)
         {
@@ -222,6 +235,7 @@ public class StoryManager : MonoBehaviour
         //결과 설명 문장
         else if(Adventure.instance.currentType == 2)
         {
+            StartCoroutine(Adventure.instance.mioHeathBar(-Adventure.instance.storyScore));
             if (ranNum < 4)
             {
                 if (ranNum == 0)
@@ -407,22 +421,13 @@ public class StoryManager : MonoBehaviour
             
         }
         
-        //체력이 다 소모되었을 때
-        
     }
-
-    IEnumerator FademioTalk()
+    
+    public void mioTalk()
     {
-        Adventure.instance.mioTalk.SetActive(true);
-
-        while (Adventure.instance.mioTalk.GetComponent<Image>().fillAmount > 0)
-        {
-            Adventure.instance.mioTalk.GetComponent<Image>().fillAmount -= Time.deltaTime * talkSpeed;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        Adventure.instance.mioTalk.SetActive(false);
-        yield return null;
+        int ranTalkNum = Random.Range(0, 2);
+        var obj = Instantiate(Adventure.instance.mioTalk,Adventure.instance.obj_bottomView.transform);
+        obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str_talk[ranNum,ranTalkNum];
     }
 
 }
