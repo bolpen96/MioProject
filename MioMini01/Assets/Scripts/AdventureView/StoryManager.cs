@@ -111,8 +111,8 @@ public class StoryManager : MonoBehaviour
         {
             { "¾îµð·Î °¥²¨¾ß??", "¿õ?"},
             { "¹°ÀÌ´Ù ¹°\nÃ·º¡Ã·º¡","³îÀÚ!\n°¡Áî¾Æ~" },
-            { "´þ´Ù¸®..","³ª ³Ê¹« ´õ¿ö\n »©¾×" },
-            { "Ãä´Ù¸®..","³ª ³Ê¹« Ãß¿ö\n »©¾×" },
+            { "´þ´Ù¸®..","³Ê¹« ´õ¿ö\n »©¾×" },
+            { "Ãä´Ù¸®..","³Ê¹« Ãß¿ö\n »©¾×" },
             { "È£´Þ´Þ..","°¡..°¥²¨¾ß?" },
             { "Çã°Æ ¸ÀÀÖ°Úµû", "²¿¸£¸¤.." },
             { "¿À¿Í¾Ó Àú°Ô ¹¹Áö?", "È£¿¡¿¨" },
@@ -287,6 +287,10 @@ public class StoryManager : MonoBehaviour
                     Adventure.instance.txt_resultEffect.text = result_effect[7, 0] + jungleHeart + result_effect[7, 1];
                     StartCoroutine(Adventure.instance.mioHeathBar(-jungleHeart));
                 }
+                else if(resultRanNum == 2)
+                {
+                    Adventure.instance.txt_resultEffect.text = "¸ÔÀÌ" + result_effect[5, 0];
+                }
             }
             else if (ranNum == 5)
             {
@@ -390,7 +394,7 @@ public class StoryManager : MonoBehaviour
             }
             else if (ranNum == 13)
             {
-                if (ckNum == 1 || ckNum == 2) //¼öÁ¤ - È®·ü ¹× ½Ã½ºÅÛ
+                if (ckNum == 0 || ckNum == 1) //¼öÁ¤ - È®·ü ¹× ½Ã½ºÅÛ
                 {
                     resultRanNum = Random.Range(0, 3);
                     if (resultRanNum == 0)

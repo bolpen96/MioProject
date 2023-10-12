@@ -52,14 +52,12 @@ public class Adventure : MonoBehaviour
         float smooth;
         mioHeath += num/100;
 
-        Debug.Log(Img_mioHeath.fillAmount + " ||" + mioHeath);
-
         while (Img_mioHeath.fillAmount > mioHeath)
         {
             smooth = Mathf.Lerp(Img_mioHeath.fillAmount, mioHeath, Time.deltaTime * 10f);
             Img_mioHeath.fillAmount = smooth;
 
-            if(Img_mioHeath.fillAmount < 0)
+            if(Img_mioHeath.fillAmount <= 0)
             {
                 gameoverView.SetActive(true);
                 break;
