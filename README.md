@@ -26,3 +26,12 @@
 ## 🚀 실행 방법
 1. Unity 2021.3.37f 설치
 2. 3D(Build-in Render Pipeline) 으로 코어설정
+
+## 📜 커밋 & 브랜치 전략
+- feat : (새로운 기능 추가)
+- fix : (버그 수정)
+- refactor : (코드 리팩토링)
+- docs : (문서 수정)
+- style : (코드 스타일 변경, 공백, 세미콜론 등)
+
+예) git commit -m "feat: 플레이어 공격 기능 추가"
