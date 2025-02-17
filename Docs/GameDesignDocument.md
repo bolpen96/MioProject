@@ -1,11 +1,6 @@
 # (업데이트) 게임 기획 2.0V
-<table>
-  <tr>
-    <td>
-      [기획서 2.0v](https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/GameDesignDocument.md)
-    </td>
-  </tr>
-</table>
+[기획서 2.0v](https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/GameDesignDocument.md)
+<br />
 
 
 # 과거 게임 기획 A 단계
