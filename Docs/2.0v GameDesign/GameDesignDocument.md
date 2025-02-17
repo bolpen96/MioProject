@@ -32,7 +32,6 @@
     <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C25.PNG" alt = "게임기획 18" width="500"></td>
   </tr>
   <tr>
-    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C26.PNG" alt = "게임기획 19" width="500"></td>
     <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C27.PNG" alt = "게임기획 20" width="500"></td>
   </tr>
 </table>
