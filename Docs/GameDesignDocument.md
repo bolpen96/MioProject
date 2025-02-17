@@ -12,9 +12,9 @@
   </tr>
       
   <tr>
-    <td>|<img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C7.JPG" alt="게임 기획07" width="500">|</td>
-    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C8.JPG" alt="게임 기획08" width="500">|</td>
-    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C9.JPG" alt="게임 기획09" width="500">|</td>
+    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C7.JPG" alt="게임 기획07" width="500"></td>
+    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C8.JPG" alt="게임 기획08" width="500"></td>
+    <td><img src="https://github.com/bolpen96/MioProject/blob/main/Docs/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C9.JPG" alt="게임 기획09" width="500"></td>
   </tr>
   
   <tr>
