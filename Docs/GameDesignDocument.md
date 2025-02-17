@@ -2,7 +2,7 @@
 <table>
   <tr>
     <td>
-      ![기획서 2.0v](https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/GameDesignDocument.md)
+      [기획서 2.0v](https://github.com/bolpen96/MioProject/blob/main/Docs/2.0v%20GameDesign/GameDesignDocument.md)
     </td>
   </tr>
 </table>
